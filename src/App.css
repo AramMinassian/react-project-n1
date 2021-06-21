@@ -1,0 +1,7 @@
+.TaskList{
+  display: flex;
+}
+
+.Task{
+  margin: 10px;
+}
