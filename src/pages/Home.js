@@ -4,9 +4,7 @@ import Todo from "../components/Todo";
 
 function Home(){
     return (
-        <div className="Home">
-            <Todo />
-        </div>
+        <Todo />
     )
 }
 

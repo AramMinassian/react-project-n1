@@ -1,15 +1,21 @@
 import React from "react";
 import Task from "./Task";
+import { Row } from "react-bootstrap";
 
 
 class TaskList extends React.Component {
   render() {
-    const { tasks } = this.props;
-    const taskList = tasks.map((task, i) => <Task key={`task${i}`} task={task} />)
+    const { tasks, deleteTask, onSelectMode } = this.props;
+    const taskList = tasks.map((task) => <Task 
+                                            key={task._id} 
+                                            task={task} 
+                                            deleteTask={deleteTask}
+                                            onSelectMode={onSelectMode}
+                                          />)
     return (
-      <div className="TaskList">
+      <Row>
         {taskList}
-      </div>
+      </Row>
     )
   }
 }
