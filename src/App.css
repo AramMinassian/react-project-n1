@@ -1,3 +1,18 @@
 .Task{
   margin: 10px 0;
 }
+
+.Task input[type="checkbox"]{
+  display: block;
+  margin-left: auto;
+}
+
+.ControlButtons{
+  display: flex;
+
+}
+
+.ControlButtons button{
+  flex: 1;
+  margin: 0 4px
+}
