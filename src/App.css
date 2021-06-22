@@ -6,13 +6,18 @@
   display: block;
   margin-left: auto;
 }
+.Task.Selected{
+  border: 1px solid rgb(117, 4, 4);
+}
 
 .ControlButtons{
   display: flex;
-
 }
 
 .ControlButtons button{
   flex: 1;
   margin: 0 4px
 }
+
+
+

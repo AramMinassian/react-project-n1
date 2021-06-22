@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Row, Button } from "react-bootstrap";
 
 
@@ -31,6 +32,15 @@ class ControlButtons extends React.Component {
       </Row>
     )
   }
+}
+
+ControlButtons.propTypes = {
+  toggleSelectMode: PropTypes.func.isRequired,
+  onSelectMode: PropTypes.bool.isRequired,
+  selectedTasks: PropTypes.object.isRequired,
+  selectAllTasks: PropTypes.func.isRequired,
+  deselectAllTasks: PropTypes.func.isRequired,
+  deleteSelectedTasks: PropTypes.func.isRequired
 }
 
 export default ControlButtons;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Task from "./Task";
 import { Row } from "react-bootstrap";
 
@@ -20,6 +21,14 @@ class TaskList extends React.Component {
       </Row>
     )
   }
+}
+
+TaskList.propType = {
+  task: PropTypes.object.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  onSelectMode: PropTypes.bool.isRequired,
+  selectTask: PropTypes.func.isRequired,
+  selectedTasks: PropTypes.object.isRequired
 }
 
 export default TaskList;

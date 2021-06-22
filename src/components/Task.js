@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Col, Card, Button } from "react-bootstrap";
 
 class Task extends React.Component {
@@ -22,13 +23,13 @@ class Task extends React.Component {
         md={4}
         lg={3}
         xl={2}>
-        <Card className="Task">
+        <Card className={`Task ${selectedTasks.has(task._id) ? "Selected" : ""}`}>
           <Card.Body>
             <input
               type="checkbox"
               disabled={!onSelectMode}
-              onChange={this.handleSelect} 
-              checked={selectedTasks.has(task._id)}/>
+              onChange={this.handleSelect}
+              checked={selectedTasks.has(task._id)} />
             <Card.Title>{task.title}</Card.Title>
             <Card.Text>
               Some quick example text to build on the card title and make up the bulk of
@@ -44,6 +45,14 @@ class Task extends React.Component {
       </Col>
     )
   }
+}
+
+Task.propTypes = {
+  task: PropTypes.object.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  onSelectMode: PropTypes.bool.isRequired,
+  selectTask: PropTypes.func.isRequired,
+  selectedTasks: PropTypes.object.isRequired
 }
 
 export default Task

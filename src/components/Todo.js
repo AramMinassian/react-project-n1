@@ -2,6 +2,7 @@ import React from "react";
 import TaskInput from "./TaskInput";
 import TaskList from "./TaskList";
 import ControlButtons from "./ControlButtons";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import { Container } from "react-bootstrap";
 
 
@@ -80,6 +81,7 @@ class Todo extends React.Component {
                     selectTask={this.selectTask}
                     selectedTasks={selectedTasks}
                 />
+                <ConfirmDeleteModal/>
             </Container>
 
         )
