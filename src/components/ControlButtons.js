@@ -1,36 +1,46 @@
 import React from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { Row, Button } from "react-bootstrap";
 
 
 class ControlButtons extends React.Component {
 
-
   render() {
-    const {tasks, onSelectMode, toggleSelectMode} = this.props;
+    const { 
+      tasks, onSelectMode, toggleSelectMode, selectedTasks, 
+      selectAllTasks, deselectAllTasks , deleteSelectedTasks
+          } = this.props;
     return (
       <Row>
-        <Col lg="3">
+        <div className="ControlButtons">
           <Button
             variant="success"
             onClick={toggleSelectMode}
             disabled={!tasks.length}
           >{onSelectMode ? "Cancel" : "Select"}</Button>
-        </Col>
-        <Col lg="3">
           <Button
             variant="warning"
             disabled={!onSelectMode}
-          >Select All</Button>
-        </Col>
-        <Col lg="3">
+            onClick={(selectedTasks.size !== tasks.length) ? selectAllTasks : deselectAllTasks}
+          >{(tasks.length === 0 || selectedTasks.size !== tasks.length) ? "Select All" : "Deselect All"}</Button>
           <Button
             variant="danger"
-            disabled={!onSelectMode}
-          >Delete Selected</Button>
-        </Col>
+            disabled={!onSelectMode || !selectedTasks.size}
+            onClick={deleteSelectedTasks}
+          >Delete</Button>
+        </div>
       </Row>
     )
   }
+}
+
+ControlButtons.propTypes = {
+  toggleSelectMode: PropTypes.func.isRequired,
+  onSelectMode: PropTypes.bool.isRequired,
+  selectedTasks: PropTypes.object.isRequired,
+  selectAllTasks: PropTypes.func.isRequired,
+  deselectAllTasks: PropTypes.func.isRequired,
+  deleteSelectedTasks: PropTypes.func.isRequired
 }
 
 export default ControlButtons;

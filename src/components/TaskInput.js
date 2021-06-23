@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { idGenerator } from "../utilityFunctions";
 import { Row } from "react-bootstrap";
 
@@ -28,17 +29,23 @@ class TaskInput extends React.Component {
     render() {
         const { value } = this.state;
         return (
-            <Row style={{marginBottom: "20px"}}>
-                <input
-                    type="text"
-                    value={value}
-                    onChange={this.handleChange} />
-                <button
-                    onClick={this.handleAdd} >Add</button>
+            <Row style={{ marginBottom: "20px" }}>
+                <div>
+                    <input
+                        type="text"
+                        value={value}
+                        onChange={this.handleChange} />
+                    <button
+                        onClick={this.handleAdd} >Add</button>
+                </div>
+
             </Row>
         )
     }
 }
 
+TaskInput.propTypes = {
+    addTask: PropTypes.func.isRequired
+};
 
 export default TaskInput
