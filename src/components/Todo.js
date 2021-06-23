@@ -1,5 +1,5 @@
 import React from "react";
-import TaskInput from "./TaskInput";
+import TaskInputModal from "./TaskInputModal";
 import TaskList from "./TaskList";
 import ControlButtons from "./ControlButtons";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
@@ -9,9 +9,16 @@ import { Container } from "react-bootstrap";
 class Todo extends React.Component {
     state = {
         tasks: [],
+        onTaskInputMode: false,
         onSelectMode: false,
         selectedTasks: new Set(),
         onConfirmDeleteMode: false,
+    }
+
+    toggleTaskInputMode = () => {
+        this.setState({
+            onTaskInputMode: !this.state.onTaskInputMode
+        })
     }
 
     addTask = (task) => {
@@ -68,32 +75,44 @@ class Todo extends React.Component {
     }
 
     render() {
-        const { tasks, onSelectMode, selectedTasks, onConfirmDeleteMode } = this.state;
+        const { 
+            tasks, onSelectMode, selectedTasks, onConfirmDeleteMode,
+            onTaskInputMode 
+              } = this.state;
         return (
-            <Container>
-                <TaskInput addTask={this.addTask} />
-                <ControlButtons
-                    tasks={tasks}
-                    toggleSelectMode={this.toggleSelectMode}
-                    onSelectMode={onSelectMode}
-                    selectedTasks={selectedTasks}
-                    selectAllTasks={this.selectAllTasks}
-                    deselectAllTasks={this.deselectAllTasks}
-                    toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
-                />
-                <TaskList
-                    tasks={tasks}
-                    deleteTask={this.deleteTask}
-                    onSelectMode={onSelectMode}
-                    selectTask={this.selectTask}
-                    selectedTasks={selectedTasks}
-                />
+            <>
+                <Container>
+                    <ControlButtons
+                        tasks={tasks}
+                        toggleTaskInputMode={this.toggleTaskInputMode}
+                        toggleSelectMode={this.toggleSelectMode}
+                        onSelectMode={onSelectMode}
+                        selectedTasks={selectedTasks}
+                        selectAllTasks={this.selectAllTasks}
+                        deselectAllTasks={this.deselectAllTasks}
+                        toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
+                    />
+                    <TaskList
+                        tasks={tasks}
+                        deleteTask={this.deleteTask}
+                        onSelectMode={onSelectMode}
+                        selectTask={this.selectTask}
+                        selectedTasks={selectedTasks}
+                    />
+                </Container>
+                {onTaskInputMode && <TaskInputModal
+                    toggleTaskInputMode={this.toggleTaskInputMode}
+                    addTask={this.addTask}
+                />}
                 {onConfirmDeleteMode && <ConfirmDeleteModal
-                                            toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
-                                            selectedTasks={selectedTasks}
-                                            deleteSelectedTasks={this.deleteSelectedTasks}
-                                        />}
-            </Container>
+                    toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
+                    selectedTasks={selectedTasks}
+                    deleteSelectedTasks={this.deleteSelectedTasks}
+                />}
+
+            </>
+
+
 
         )
     }

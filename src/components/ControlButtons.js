@@ -8,11 +8,16 @@ class ControlButtons extends React.Component {
   render() {
     const { 
       tasks, onSelectMode, toggleSelectMode, selectedTasks, 
-      selectAllTasks, deselectAllTasks , toggleConfirmDeleteModal
+      selectAllTasks, deselectAllTasks , toggleConfirmDeleteModal,
+      toggleTaskInputMode
           } = this.props;
     return (
       <Row>
         <div className="ControlButtons">
+        <Button
+            variant="primary"
+            onClick={toggleTaskInputMode}
+          >Add Task</Button>
           <Button
             variant="success"
             onClick={toggleSelectMode}
@@ -35,6 +40,8 @@ class ControlButtons extends React.Component {
 }
 
 ControlButtons.propTypes = {
+  tasks: PropTypes.array.isRequired,
+  toggleTaskInputMode: PropTypes.func.isRequired,
   toggleSelectMode: PropTypes.func.isRequired,
   onSelectMode: PropTypes.bool.isRequired,
   selectedTasks: PropTypes.object.isRequired,

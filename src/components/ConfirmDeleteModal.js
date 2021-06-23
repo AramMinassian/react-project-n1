@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import "./ConfirmDeleteModal.css";
+import "./Modals.css";
 
-class Modal extends React.Component {
+class ConfirmDeleteModal extends React.Component {
 
 
   handleSideClick = (e) => {
@@ -21,30 +22,30 @@ class Modal extends React.Component {
     const { toggleConfirmDeleteModal, selectedTasks } = this.props;
     return (
       <div
-        className="cdm-back"
+        className="mdl-back"
         onClick={this.handleSideClick}
       >
-        <div className="cdm-wrapper">
-          <div className="cdm-header">
+        <div className="mdl-wrapper">
+          <div className="mdl-header">
             <span>Delete tasks</span>
             <span
-              className="cdm-close-btn"
+              className="mdl-close-btn"
               onClick={toggleConfirmDeleteModal}
             >×</span>
           </div>
-          <div className="cdm-body">
+          <div className="mdl-body">
             <h4>
               {`Are you sure you want to delete selected task${selectedTasks.size > 1 ? "s" : ""}?`}
             </h4>
           </div>
-          <div className="cdm-footer">
+          <div className="mdl-footer">
             <Button
-              className="btn"
+              className="mdl-action-btn"
               variant="primary"
               onClick={toggleConfirmDeleteModal}
             >Cancel</Button>
             <Button
-              className="btn"
+              className="mdl-action-btn"
               variant="danger"
               onClick={this.handleDelete}
             >Delete</Button>
@@ -55,4 +56,10 @@ class Modal extends React.Component {
   }
 }
 
-export default Modal;
+ConfirmDeleteModal.propTypes = {
+  toggleConfirmDeleteModal: PropTypes.func.isRequired,
+  selectedTasks: PropTypes.object.isRequired,
+  deleteSelectedTasks: PropTypes.func.isRequired
+}
+
+export default ConfirmDeleteModal;
