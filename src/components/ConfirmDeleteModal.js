@@ -1,27 +1,65 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { Button } from "react-bootstrap";
+import "./Modals.css";
 
-class Modal extends React.Component {
+class ConfirmDeleteModal extends React.Component {
+
+
+  handleSideClick = (e) => {
+    if (e.target.className !== "cdm-back") return;
+    const { toggleConfirmDeleteModal } = this.props;
+    toggleConfirmDeleteModal()
+  }
+
+  handleDelete = () => {
+    const { deleteSelectedTasks, toggleConfirmDeleteModal } = this.props;
+    deleteSelectedTasks();
+    toggleConfirmDeleteModal();
+  }
+
   render() {
+    const { toggleConfirmDeleteModal, selectedTasks } = this.props;
     return (
-      <div className="modal-wrapper-1">
-        <div className="modal-header-1">
-          <p>Modal header text</p>
-          <span className="close-modal-btn">x</span>
-        </div>
-        <div className="modal-body-1">
-          <h4>Title</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-            Perferendis quibusdam itaque perspiciatis laudantium architecto non? 
-            Ipsa consequatur nobis sequi culpa, cupiditate eveniet neque aut 
-            ipsum repudiandae cum laborum ipsam illo.</p>
-        </div>
-        <div className="modal-footer-1">
-          <button className="btn-cancel">Cancel</button>
-          <button className="btn-done">Done</button>
+      <div
+        className="mdl-back"
+        onClick={this.handleSideClick}
+      >
+        <div className="mdl-wrapper">
+          <div className="mdl-header">
+            <span>Delete tasks</span>
+            <span
+              className="mdl-close-btn"
+              onClick={toggleConfirmDeleteModal}
+            >×</span>
+          </div>
+          <div className="mdl-body">
+            <h4>
+              {`Are you sure you want to delete selected task${selectedTasks.size > 1 ? "s" : ""}?`}
+            </h4>
+          </div>
+          <div className="mdl-footer">
+            <Button
+              className="mdl-action-btn"
+              variant="primary"
+              onClick={toggleConfirmDeleteModal}
+            >Cancel</Button>
+            <Button
+              className="mdl-action-btn"
+              variant="danger"
+              onClick={this.handleDelete}
+            >Delete</Button>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-export default Modal;
+ConfirmDeleteModal.propTypes = {
+  toggleConfirmDeleteModal: PropTypes.func.isRequired,
+  selectedTasks: PropTypes.object.isRequired,
+  deleteSelectedTasks: PropTypes.func.isRequired
+}
+
+export default ConfirmDeleteModal;
