@@ -10,7 +10,8 @@ class Todo extends React.Component {
     state = {
         tasks: [],
         onSelectMode: false,
-        selectedTasks: new Set()
+        selectedTasks: new Set(),
+        onConfirmDeleteMode: false,
     }
 
     addTask = (task) => {
@@ -60,8 +61,14 @@ class Todo extends React.Component {
         this.toggleSelectMode();
     }
 
+    toggleConfirmDeleteModal = () => {
+        this.setState({
+            onConfirmDeleteMode: !this.state.onConfirmDeleteMode
+        })
+    }
+
     render() {
-        const { tasks, onSelectMode, selectedTasks } = this.state;
+        const { tasks, onSelectMode, selectedTasks, onConfirmDeleteMode } = this.state;
         return (
             <Container>
                 <TaskInput addTask={this.addTask} />
@@ -72,7 +79,7 @@ class Todo extends React.Component {
                     selectedTasks={selectedTasks}
                     selectAllTasks={this.selectAllTasks}
                     deselectAllTasks={this.deselectAllTasks}
-                    deleteSelectedTasks={this.deleteSelectedTasks}
+                    toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
                 />
                 <TaskList
                     tasks={tasks}
@@ -81,7 +88,11 @@ class Todo extends React.Component {
                     selectTask={this.selectTask}
                     selectedTasks={selectedTasks}
                 />
-                <ConfirmDeleteModal/>
+                {onConfirmDeleteMode && <ConfirmDeleteModal
+                                            toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
+                                            selectedTasks={selectedTasks}
+                                            deleteSelectedTasks={this.deleteSelectedTasks}
+                                        />}
             </Container>
 
         )
