@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Col, Card, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-class Task extends React.Component {
+class Task extends React.PureComponent {
 
   handleDelete = () => {
     const { task, deleteTask } = this.props;
@@ -15,7 +17,7 @@ class Task extends React.Component {
   }
 
   render() {
-    const { task, onSelectMode, selectedTasks } = this.props;
+    const { task, onSelectMode, selectedTasks, toggleTaskInputOrEditMode } = this.props;
     return (
       <Col
         xs={12}
@@ -31,15 +33,20 @@ class Task extends React.Component {
               onChange={this.handleSelect}
               checked={selectedTasks.has(task._id)} />
             <Card.Title>{task.title}</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the bulk of
-              the card's content.
-            </Card.Text>
-            <Button
-              variant="danger"
-              onClick={this.handleDelete}
-              disabled={onSelectMode}
-            >Delete</Button>
+            <Card.Text>Description: {task.description}</Card.Text>
+            <div className="tsk-btns">
+              <Button
+                variant="warning"
+                disabled={onSelectMode}
+                onClick={() => toggleTaskInputOrEditMode(task)}
+              ><FontAwesomeIcon icon={faEdit} /></Button>
+              <Button
+                variant="danger"
+                onClick={this.handleDelete}
+                disabled={onSelectMode}
+              ><FontAwesomeIcon icon={faTrash} /></Button>
+            </div>
+
           </Card.Body>
         </Card>
       </Col>
@@ -49,6 +56,7 @@ class Task extends React.Component {
 
 Task.propTypes = {
   task: PropTypes.object.isRequired,
+  toggleTaskInputOrEditMode: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   onSelectMode: PropTypes.bool.isRequired,
   selectTask: PropTypes.func.isRequired,

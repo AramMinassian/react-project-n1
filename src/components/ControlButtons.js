@@ -3,20 +3,21 @@ import PropTypes from "prop-types";
 import { Row, Button } from "react-bootstrap";
 
 
-class ControlButtons extends React.Component {
+class ControlButtons extends React.PureComponent {
 
   render() {
     const { 
       tasks, onSelectMode, toggleSelectMode, selectedTasks, 
       selectAllTasks, deselectAllTasks , toggleConfirmDeleteModal,
-      toggleTaskInputMode
+      toggleTaskInputOrEditMode
           } = this.props;
     return (
       <Row>
         <div className="ControlButtons">
         <Button
             variant="primary"
-            onClick={toggleTaskInputMode}
+            onClick={() => toggleTaskInputOrEditMode()}
+            disabled={onSelectMode}
           >Add Task</Button>
           <Button
             variant="success"
@@ -41,7 +42,7 @@ class ControlButtons extends React.Component {
 
 ControlButtons.propTypes = {
   tasks: PropTypes.array.isRequired,
-  toggleTaskInputMode: PropTypes.func.isRequired,
+  toggleTaskInputOrEditMode: PropTypes.func.isRequired,
   toggleSelectMode: PropTypes.func.isRequired,
   onSelectMode: PropTypes.bool.isRequired,
   selectedTasks: PropTypes.object.isRequired,

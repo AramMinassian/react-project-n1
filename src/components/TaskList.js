@@ -4,12 +4,13 @@ import Task from "./Task";
 import { Row } from "react-bootstrap";
 
 
-class TaskList extends React.Component {
+class TaskList extends React.PureComponent {
   render() {
-    const { tasks, deleteTask, onSelectMode, selectTask, selectedTasks } = this.props;
+    const { tasks, toggleTaskInputOrEditMode, deleteTask, onSelectMode, selectTask, selectedTasks } = this.props;
     const taskList = tasks.map((task) => <Task 
                                             key={task._id} 
                                             task={task} 
+                                            toggleTaskInputOrEditMode={toggleTaskInputOrEditMode}
                                             deleteTask={deleteTask}
                                             onSelectMode={onSelectMode}
                                             selectTask={selectTask}
@@ -25,6 +26,7 @@ class TaskList extends React.Component {
 
 TaskList.propType = {
   task: PropTypes.object.isRequired,
+  toggleTaskInputOrEditMode: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   onSelectMode: PropTypes.bool.isRequired,
   selectTask: PropTypes.func.isRequired,
