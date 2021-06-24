@@ -1,5 +1,5 @@
 import React from "react";
-import TaskInputModal from "./TaskInputModal";
+import TaskInputOrEditModal from "./TaskInputOrEditModal";
 import TaskList from "./TaskList";
 import ControlButtons from "./ControlButtons";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
@@ -9,20 +9,29 @@ import { Container } from "react-bootstrap";
 class Todo extends React.Component {
     state = {
         tasks: [],
-        onTaskInputMode: false,
+        onTaskInputOrEditMode: false,
+        taskToEdit: null,
         onSelectMode: false,
         selectedTasks: new Set(),
         onConfirmDeleteMode: false,
     }
 
-    toggleTaskInputMode = () => {
+    toggleTaskInputOrEditMode = (taskToEdit = null) => {
         this.setState({
-            onTaskInputMode: !this.state.onTaskInputMode
+            onTaskInputOrEditMode: !this.state.onTaskInputOrEditMode,
+            taskToEdit
         })
     }
 
     addTask = (task) => {
         const tasks = [...this.state.tasks, task];
+        this.setState({ tasks });
+    }
+
+    editTask = (editedTask) => {
+        const tasks = this.state.tasks.map(task => {
+            return (task._id === editedTask._id) ? editedTask : task;
+        })
         this.setState({ tasks });
     }
 
@@ -75,16 +84,16 @@ class Todo extends React.Component {
     }
 
     render() {
-        const { 
+        const {
             tasks, onSelectMode, selectedTasks, onConfirmDeleteMode,
-            onTaskInputMode 
-              } = this.state;
+            onTaskInputOrEditMode, inputOrEditMode, taskToEdit
+        } = this.state;
         return (
             <>
                 <Container>
                     <ControlButtons
                         tasks={tasks}
-                        toggleTaskInputMode={this.toggleTaskInputMode}
+                        toggleTaskInputOrEditMode={this.toggleTaskInputOrEditMode}
                         toggleSelectMode={this.toggleSelectMode}
                         onSelectMode={onSelectMode}
                         selectedTasks={selectedTasks}
@@ -94,15 +103,19 @@ class Todo extends React.Component {
                     />
                     <TaskList
                         tasks={tasks}
+                        toggleTaskInputOrEditMode={this.toggleTaskInputOrEditMode}
                         deleteTask={this.deleteTask}
                         onSelectMode={onSelectMode}
                         selectTask={this.selectTask}
                         selectedTasks={selectedTasks}
                     />
                 </Container>
-                {onTaskInputMode && <TaskInputModal
-                    toggleTaskInputMode={this.toggleTaskInputMode}
+                {onTaskInputOrEditMode && <TaskInputOrEditModal
+                    mode={inputOrEditMode}
+                    taskToEdit={taskToEdit}
+                    toggleTaskInputOrEditMode={this.toggleTaskInputOrEditMode}
                     addTask={this.addTask}
+                    editTask={this.editTask}
                 />}
                 {onConfirmDeleteMode && <ConfirmDeleteModal
                     toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
