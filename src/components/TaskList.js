@@ -4,7 +4,7 @@ import Task from "./Task";
 import { Row } from "react-bootstrap";
 
 
-class TaskList extends React.Component {
+class TaskList extends React.PureComponent {
   render() {
     const { tasks, toggleTaskInputOrEditMode, deleteTask, onSelectMode, selectTask, selectedTasks } = this.props;
     const taskList = tasks.map((task) => <Task 

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Row, Button } from "react-bootstrap";
 
 
-class ControlButtons extends React.Component {
+class ControlButtons extends React.PureComponent {
 
   render() {
     const { 

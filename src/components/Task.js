@@ -4,7 +4,7 @@ import { Col, Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-class Task extends React.Component {
+class Task extends React.PureComponent {
 
   handleDelete = () => {
     const { task, deleteTask } = this.props;

@@ -33,7 +33,7 @@ class TaskInputOrEditModal extends React.Component {
         }
     }
 
-    // handleAdd and handleEdit methods work similarely by written separately to be more clear
+    // handleAdd and handleEdit methods work similarly but written separately to be more clear
 
     handleAdd = () => {
         const { title, description } = this.state;
