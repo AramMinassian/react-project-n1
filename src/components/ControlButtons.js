@@ -8,7 +8,7 @@ class ControlButtons extends React.PureComponent {
   render() {
     const { 
       tasks, onSelectMode, toggleSelectMode, selectedTasks, 
-      selectAllTasks, deselectAllTasks , toggleConfirmDeleteModal,
+      selectAllTasks, deselectAllTasks , toggleConfirmDeleteMode,
       toggleTaskInputOrEditMode
           } = this.props;
     return (
@@ -32,7 +32,7 @@ class ControlButtons extends React.PureComponent {
           <Button
             variant="danger"
             disabled={!onSelectMode || !selectedTasks.size}
-            onClick={toggleConfirmDeleteModal}
+            onClick={() => toggleConfirmDeleteMode()}
           >Delete</Button>
         </div>
       </Row>
@@ -48,7 +48,7 @@ ControlButtons.propTypes = {
   selectedTasks: PropTypes.object.isRequired,
   selectAllTasks: PropTypes.func.isRequired,
   deselectAllTasks: PropTypes.func.isRequired,
-  toggleConfirmDeleteModal: PropTypes.func.isRequired
+  toggleConfirmDeleteMode: PropTypes.func.isRequired
 }
 
 export default ControlButtons;

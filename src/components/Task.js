@@ -6,18 +6,16 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 class Task extends React.PureComponent {
 
-  handleDelete = () => {
-    const { task, deleteTask } = this.props;
-    deleteTask(task._id);
-  }
-
   handleSelect = (e) => {
     const { task, selectTask } = this.props;
     selectTask(task._id);
   }
 
   render() {
-    const { task, onSelectMode, selectedTasks, toggleTaskInputOrEditMode } = this.props;
+    const { 
+      task, onSelectMode, selectedTasks, toggleTaskInputOrEditMode,
+      toggleConfirmDeleteMode 
+          } = this.props;
     return (
       <Col
         xs={12}
@@ -42,7 +40,7 @@ class Task extends React.PureComponent {
               ><FontAwesomeIcon icon={faEdit} /></Button>
               <Button
                 variant="danger"
-                onClick={this.handleDelete}
+                onClick={() => toggleConfirmDeleteMode(task._id)}
                 disabled={onSelectMode}
               ><FontAwesomeIcon icon={faTrash} /></Button>
             </div>
@@ -57,6 +55,7 @@ class Task extends React.PureComponent {
 Task.propTypes = {
   task: PropTypes.object.isRequired,
   toggleTaskInputOrEditMode: PropTypes.func.isRequired,
+  toggleConfirmDeleteMode: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   onSelectMode: PropTypes.bool.isRequired,
   selectTask: PropTypes.func.isRequired,

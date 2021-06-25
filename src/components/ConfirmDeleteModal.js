@@ -7,21 +7,31 @@ import { faExclamationTriangle, faTimes } from "@fortawesome/free-solid-svg-icon
 
 class ConfirmDeleteModal extends React.Component {
 
+  // the component works for both single and selected tasks deletion
+  // single task deletion is indicated by taskToDelete state variable
 
   handleSideClick = (e) => {
     if (e.target.className !== "mdl-back") return;
-    const { toggleConfirmDeleteModal } = this.props;
-    toggleConfirmDeleteModal()
+    const { toggleConfirmDeleteMode } = this.props;
+    toggleConfirmDeleteMode()
   }
 
   handleDelete = () => {
-    const { deleteSelectedTasks, toggleConfirmDeleteModal } = this.props;
-    deleteSelectedTasks();
-    toggleConfirmDeleteModal();
+    const { deleteSelectedTasks, toggleConfirmDeleteMode, deleteTask, taskToDelete } = this.props;
+    if (taskToDelete) {
+      deleteTask(taskToDelete)
+    } else {
+      deleteSelectedTasks();
+    }
+    toggleConfirmDeleteMode();
   }
 
   render() {
-    const { toggleConfirmDeleteModal, selectedTasks } = this.props;
+    const { toggleConfirmDeleteMode, selectedTasks, taskToDelete } = this.props;
+
+    let deleteModalMessage = `Are you sure you want to delete selected task${selectedTasks.size > 1 ? "s" : ""} ?`;
+    taskToDelete && (deleteModalMessage = "Are you sure you want to delete the task ?");
+        
     return (
       <div
         className="mdl-back"
@@ -31,22 +41,20 @@ class ConfirmDeleteModal extends React.Component {
           <div className="mdl-header">
             <span
               className="mdl-info"
-            ><FontAwesomeIcon icon={faExclamationTriangle} color="#ffc107"/></span>
+            ><FontAwesomeIcon icon={faExclamationTriangle} color="#ffc107" /></span>
             <span
               className="mdl-close-btn"
-              onClick={toggleConfirmDeleteModal}
+              onClick={() => toggleConfirmDeleteMode()}
             ><FontAwesomeIcon icon={faTimes} /></span>
           </div>
           <div className="mdl-body">
-            <p>
-              {`Are you sure you want to delete selected task${selectedTasks.size > 1 ? "s" : ""}?`}
-            </p>
+            <p>{deleteModalMessage}</p>
           </div>
           <div className="mdl-footer">
             <Button
               className="mdl-action-btn"
               variant="primary"
-              onClick={toggleConfirmDeleteModal}
+              onClick={() => toggleConfirmDeleteMode()}
             >Cancel</Button>
             <Button
               className="mdl-action-btn"
@@ -61,7 +69,9 @@ class ConfirmDeleteModal extends React.Component {
 }
 
 ConfirmDeleteModal.propTypes = {
-  toggleConfirmDeleteModal: PropTypes.func.isRequired,
+  toggleConfirmDeleteMode: PropTypes.func.isRequired,
+  taskToDelete: PropTypes.string,
+  deleteTask: PropTypes.func.isRequired,
   selectedTasks: PropTypes.object.isRequired,
   deleteSelectedTasks: PropTypes.func.isRequired
 }

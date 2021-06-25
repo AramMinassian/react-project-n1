@@ -11,6 +11,7 @@ class Todo extends React.Component {
         tasks: [],
         onTaskInputOrEditMode: false,
         taskToEdit: null,
+        taskToDelete: "",
         onSelectMode: false,
         selectedTasks: new Set(),
         onConfirmDeleteMode: false,
@@ -77,16 +78,17 @@ class Todo extends React.Component {
         this.toggleSelectMode();
     }
 
-    toggleConfirmDeleteModal = () => {
+    toggleConfirmDeleteMode = (taskToDelete = "") => {
         this.setState({
-            onConfirmDeleteMode: !this.state.onConfirmDeleteMode
+            onConfirmDeleteMode: !this.state.onConfirmDeleteMode,
+            taskToDelete
         })
     }
 
     render() {
         const {
             tasks, onSelectMode, selectedTasks, onConfirmDeleteMode,
-            onTaskInputOrEditMode, inputOrEditMode, taskToEdit
+            onTaskInputOrEditMode, inputOrEditMode, taskToEdit, taskToDelete
         } = this.state;
         return (
             <>
@@ -99,11 +101,12 @@ class Todo extends React.Component {
                         selectedTasks={selectedTasks}
                         selectAllTasks={this.selectAllTasks}
                         deselectAllTasks={this.deselectAllTasks}
-                        toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
+                        toggleConfirmDeleteMode={this.toggleConfirmDeleteMode}
                     />
                     <TaskList
                         tasks={tasks}
                         toggleTaskInputOrEditMode={this.toggleTaskInputOrEditMode}
+                        toggleConfirmDeleteMode={this.toggleConfirmDeleteMode}
                         deleteTask={this.deleteTask}
                         onSelectMode={onSelectMode}
                         selectTask={this.selectTask}
@@ -118,7 +121,9 @@ class Todo extends React.Component {
                     editTask={this.editTask}
                 />}
                 {onConfirmDeleteMode && <ConfirmDeleteModal
-                    toggleConfirmDeleteModal={this.toggleConfirmDeleteModal}
+                    toggleConfirmDeleteMode={this.toggleConfirmDeleteMode}
+                    taskToDelete={taskToDelete}
+                    deleteTask={this.deleteTask}
                     selectedTasks={selectedTasks}
                     deleteSelectedTasks={this.deleteSelectedTasks}
                 />}
