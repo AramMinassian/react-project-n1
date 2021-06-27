@@ -24,21 +24,108 @@ class Todo extends React.Component {
         })
     }
 
+    componentDidMount() {
+        this.getAllTasks()
+    }
+
+    getAllTasks = () => {
+        fetch("http://localhost:3001/task", {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(async (response) => {
+                const result = await response.json();
+                if (response.status >= 400 && response.status < 600) {
+                    if (result.error) {
+                        throw result.error;
+                    } else {
+                        throw new Error("Something went wrong");
+                    }
+                }
+                this.setState({ tasks: result });
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     addTask = (task) => {
-        const tasks = [...this.state.tasks, task];
-        this.setState({ tasks });
+        fetch("http://localhost:3001/task", {
+            method: "POST",
+            body: JSON.stringify(task),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(async (response) => {
+                const result = await response.json();
+                if (response.status >= 400 && response.status < 600) {
+                    if (result.error) {
+                        throw result.error;
+                    } else {
+                        throw new Error("Something went wrong");
+                    }
+                }
+                const tasks = [...this.state.tasks, result];
+                console.log(tasks);
+                this.setState({ tasks });
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     editTask = (editedTask) => {
-        const tasks = this.state.tasks.map(task => {
-            return (task._id === editedTask._id) ? editedTask : task;
+        fetch(`http://localhost:3001/task/${editedTask._id}`, {
+            method: "PUT",
+            body: JSON.stringify(editedTask),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
-        this.setState({ tasks });
+            .then(async (response) => {
+                const result = await response.json();
+                if (response.status >= 400 && response.status < 600) {
+                    if (result.error) {
+                        throw result.error;
+                    } else {
+                        throw new Error("Something went wrong");
+                    }
+                }
+                const tasks = this.state.tasks.map(task => {
+                    return (task._id === editedTask._id) ? editedTask : task;
+                })
+                this.setState({ tasks });
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
     }
 
     deleteTask = (taskId) => {
-        const tasks = this.state.tasks.filter(task => task._id !== taskId);
-        this.setState({ tasks });
+        fetch(`http://localhost:3001/task/${taskId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(async (response) => {
+                const result = await response.json();
+                if (response.status >= 400 && response.status < 600) {
+                    if (result.error) {
+                        throw result.error;
+                    } else {
+                        throw new Error("Something went wrong");
+                    }
+                }
+                const tasks = this.state.tasks.filter(task => task._id !== taskId);
+                this.setState({ tasks })
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     toggleSelectMode = () => {
@@ -71,11 +158,38 @@ class Todo extends React.Component {
     }
 
     deleteSelectedTasks = () => {
-        const tasks = this.state.tasks.filter(task => {
-            return !this.state.selectedTasks.has(task._id);
-        });
-        this.setState({ tasks });
-        this.toggleSelectMode();
+
+        // backend accepts an array of taskIds
+        const body = {
+            tasks: [...this.state.selectedTasks]
+        }
+
+        fetch(`http://localhost:3001/task`, {
+            method: "PATCH",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(async (response) => {
+                const result = await response.json();
+                if (response.status >= 400 && response.status < 600) {
+                    if (result.error) {
+                        throw result.error;
+                    } else {
+                        throw new Error("Something went wrong");
+                    }
+                }
+                const tasks = this.state.tasks.filter(task => {
+                    return !this.state.selectedTasks.has(task._id);
+                });
+                this.setState({ tasks });
+                this.toggleSelectMode();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
     }
 
     toggleConfirmDeleteMode = (taskToDelete = "") => {

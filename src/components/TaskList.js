@@ -29,7 +29,7 @@ class TaskList extends React.PureComponent {
 }
 
 TaskList.propType = {
-  task: PropTypes.object.isRequired,
+  tasks: PropTypes.array.isRequired,
   toggleTaskInputOrEditMode: PropTypes.func.isRequired,
   toggleConfirmDeleteMode: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,

@@ -39,8 +39,8 @@
 .mdl-body.tsk-input{
   min-width: 600px;
 }
-.mdl-body .tsk-input-field{
-  margin-bottom: 10px;
+.mdl-body .tsk-textarea-field{
+  margin: 10px 0;
 }
 
 .mdl-body small{
