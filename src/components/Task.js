@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Col, Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { dateDispalyFormatter } from "../utilityFunctions";
 
 class Task extends React.PureComponent {
 
@@ -12,10 +13,10 @@ class Task extends React.PureComponent {
   }
 
   render() {
-    const { 
+    const {
       task, onSelectMode, selectedTasks, toggleTaskInputOrEditMode,
-      toggleConfirmDeleteMode 
-          } = this.props;
+      toggleConfirmDeleteMode
+    } = this.props;
     return (
       <Col
         xs={12}
@@ -32,6 +33,7 @@ class Task extends React.PureComponent {
               checked={selectedTasks.has(task._id)} />
             <Card.Title>{task.title}</Card.Title>
             <Card.Text>Description: {task.description}</Card.Text>
+            <Card.Text>Date: {dateDispalyFormatter(task.date)}</Card.Text>
             <div className="tsk-btns">
               <Button
                 variant="warning"

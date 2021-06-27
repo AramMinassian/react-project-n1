@@ -1,13 +1,14 @@
 import "./Modals.css";
 import React from "react";
 import PropTypes from "prop-types";
-import { idGenerator } from "../utilityFunctions";
 import { Button, FormControl } from "react-bootstrap";
+import { dateFormatter } from "../utilityFunctions";
 
 class TaskInputOrEditModal extends React.Component {
     state = {
         title: "",
         description: "",
+        date: dateFormatter(new Date()),
         warning: false,
     }
 
@@ -16,7 +17,8 @@ class TaskInputOrEditModal extends React.Component {
         if (taskToEdit) {
             this.setState({
                 title: taskToEdit.title,
-                description: taskToEdit.description
+                description: taskToEdit.description,
+                date: dateFormatter(new Date(taskToEdit.date))
             })
         }
     }
@@ -26,27 +28,33 @@ class TaskInputOrEditModal extends React.Component {
         this.setState({
             [name]: value
         });
-        if(name === "title"){
+        if (name === "title") {
             this.setState({
                 warning: false,
             })
         }
     }
 
+
     // handleAdd and handleEdit methods work similarly but written separately to be more clear
 
     handleAdd = () => {
         const { title, description } = this.state;
+        let date = this.state.date || dateFormatter(new Date());
         const { addTask, toggleTaskInputOrEditMode } = this.props
-        if (!title.trim()){
-            this.setState({warning: true});
+        if (!title.trim()) {
+            this.setState({ warning: true });
             return
         };
 
+        if(new Date(date) < new Date()){
+            date = dateFormatter(new Date());
+        }
+
         const newTask = {
-            _id: idGenerator(),
             title,
-            description
+            description,
+            date
         }
         addTask(newTask);
         this.setState({
@@ -58,16 +66,22 @@ class TaskInputOrEditModal extends React.Component {
 
     handleEdit = () => {
         const { title, description } = this.state;
+        let date = this.state.date || dateFormatter(new Date());
         const { editTask, toggleTaskInputOrEditMode, taskToEdit } = this.props
-        if (!title.trim()){
-            this.setState({warning: true});
+        if (!title.trim()) {
+            this.setState({ warning: true });
             return;
         };
+
+        if(new Date(date) < new Date()){
+            date = taskToEdit.date;
+        }
 
         const editedTask = {
             _id: taskToEdit._id,
             title,
-            description
+            description,
+            date
         }
         editTask(editedTask);
         toggleTaskInputOrEditMode();
@@ -75,7 +89,7 @@ class TaskInputOrEditModal extends React.Component {
 
     render() {
         const { toggleTaskInputOrEditMode, taskToEdit } = this.props;
-        const { title, description, warning } = this.state;
+        const { title, description, date, warning } = this.state;
         return (
             <div className="mdl-back">
                 <div className="mdl-wrapper">
@@ -97,6 +111,13 @@ class TaskInputOrEditModal extends React.Component {
                             placeholder="Description"
                             name="description"
                             value={description}
+                            onChange={this.handleChange}
+                        />
+                        <FormControl
+                            type="date"
+                            name="date"
+                            value={date}
+                            min={dateFormatter(new Date())}
                             onChange={this.handleChange}
                         />
                     </div>
