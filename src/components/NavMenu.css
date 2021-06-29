@@ -1,6 +1,5 @@
 a{
   text-decoration: none;
-  color: white;
 }
 
 .NavMenu {
@@ -19,12 +18,20 @@ a{
   font-size: 1.4rem;
 }
 
+
 .NavMenu .n-link{
   padding: 0 20px;
   font-size: 1.2rem;
   transition: color 0.2s ease;
 }
 
+.NavMenu a{
+  color: white;
+}
+
+.NavMenu a:hover{
+  opacity: 0.7;
+}
 
 .NavMenu .n-link-active{
   color: #ffc107;

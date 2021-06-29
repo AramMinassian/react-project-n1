@@ -8,18 +8,39 @@
   display: block;
   margin-left: auto;
 }
-.Task.Selected{
-  border: 1px solid rgb(117, 4, 4);
+
+.Task input[type="checkbox"]:disabled{
+  visibility: hidden;
 }
 
-.Task .tsk-btns{
+.Task .tsk-date {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+.Task .tsk-date span{
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.Task.onSelectMode{
+  cursor: pointer;
+  border-width: 2px;
+  opacity: 0.6;
+}
+
+.Task.Selected{
+  border: 2px solid rgb(117, 4, 4);
+  opacity: 1;
+}
+
+.tsk-btns{
   display: flex;
   justify-content: flex-start;
 }
-.Task .tsk-btns button{
+.tsk-btns button{
   margin-right: 10px;
 }
-
 
 .ControlButtons{
   display: flex;

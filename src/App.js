@@ -5,6 +5,7 @@ import NavMenu from "./components/NavMenu";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import SingleTask from "./pages/SingleTask";
 import NotFound from "./pages/NotFound";
 
 
@@ -32,6 +33,11 @@ function App() {
                     <Route 
                         path="/contact"
                         component={Contact}
+                        exact={true}
+                    />
+                    <Route 
+                        path="/task/:taskId"
+                        component={SingleTask}
                         exact={true}
                     />
                     <Route 

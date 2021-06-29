@@ -1,15 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { dateDispalyFormatter } from "../utilityFunctions";
+import { faEdit, faTrash, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { dateDispalyFormatter, truncText } from "../utilityFunctions";
 
 class Task extends React.PureComponent {
 
-  handleSelect = (e) => {
-    const { task, selectTask } = this.props;
-    selectTask(task._id);
+
+  handleSelect = () => {
+    const { task, onSelectMode, selectTask } = this.props;
+    if(!onSelectMode) return;
+    selectTask(task._id)
   }
 
   render() {
@@ -24,16 +27,23 @@ class Task extends React.PureComponent {
         md={4}
         lg={3}
         xl={2}>
-        <Card className={`Task ${selectedTasks.has(task._id) ? "Selected" : ""}`}>
+        <Card
+          className={`Task ${selectedTasks.has(task._id) ? "Selected" : ""} ${onSelectMode ? "onSelectMode" : ""}`}
+          onClick={this.handleSelect}
+        >
           <Card.Body>
-            <input
-              type="checkbox"
-              disabled={!onSelectMode}
-              onChange={this.handleSelect}
-              checked={selectedTasks.has(task._id)} />
-            <Card.Title>{task.title}</Card.Title>
-            <Card.Text>Description: {task.description}</Card.Text>
-            <Card.Text>Date: {dateDispalyFormatter(task.date)}</Card.Text>
+            
+            <Card.Title>
+              {
+                onSelectMode ? truncText(task.title) : <Link to={`/task/${task._id}`}>{truncText(task.title)}</Link>
+              }
+            </Card.Title>
+            <Card.Text>
+              <span className="tsk-date">
+                <FontAwesomeIcon icon={faCalendarAlt} />
+                <span>{dateDispalyFormatter(task.date)}</span>
+              </span>
+            </Card.Text>
             <div className="tsk-btns">
               <Button
                 variant="warning"

@@ -29,9 +29,13 @@ class ConfirmDeleteModal extends React.Component {
   render() {
     const { toggleConfirmDeleteMode, selectedTasks, taskToDelete } = this.props;
 
-    let deleteModalMessage = `Are you sure you want to delete selected task${selectedTasks.size > 1 ? "s" : ""} ?`;
-    taskToDelete && (deleteModalMessage = "Are you sure you want to delete the task ?");
-        
+    let deleteModalMessage = "";
+    if(taskToDelete){
+      deleteModalMessage = "Are you sure you want to delete the task ?"
+    } else {
+      deleteModalMessage = `Are you sure you want to delete selected task${selectedTasks.size > 1 ? "s" : ""} ?`;
+    }
+      
     return (
       <div
         className="mdl-back"
@@ -72,8 +76,8 @@ ConfirmDeleteModal.propTypes = {
   toggleConfirmDeleteMode: PropTypes.func.isRequired,
   taskToDelete: PropTypes.string,
   deleteTask: PropTypes.func.isRequired,
-  selectedTasks: PropTypes.object.isRequired,
-  deleteSelectedTasks: PropTypes.func.isRequired
+  selectedTasks: PropTypes.object,
+  deleteSelectedTasks: PropTypes.func
 }
 
 export default ConfirmDeleteModal;
