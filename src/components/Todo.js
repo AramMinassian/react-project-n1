@@ -202,7 +202,7 @@ class Todo extends React.Component {
     render() {
         const {
             tasks, onSelectMode, selectedTasks, onConfirmDeleteMode,
-            onTaskInputOrEditMode, inputOrEditMode, taskToEdit, taskToDelete
+            onTaskInputOrEditMode, taskToEdit, taskToDelete
         } = this.state;
         return (
             <>
@@ -228,7 +228,6 @@ class Todo extends React.Component {
                     />
                 </Container>
                 {onTaskInputOrEditMode && <TaskInputOrEditModal
-                    mode={inputOrEditMode}
                     taskToEdit={taskToEdit}
                     toggleTaskInputOrEditMode={this.toggleTaskInputOrEditMode}
                     addTask={this.addTask}

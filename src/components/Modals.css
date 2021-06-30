@@ -1,3 +1,8 @@
+@keyframes mount{
+  from {top: 40%; opacity: 0}
+  to {top: 50%; opacity: 1}
+}
+
 .mdl-back {
   position: fixed;
   top: 0;
@@ -18,14 +23,17 @@
   max-height: 50vh;
   overflow: scroll;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.308);
+  animation: mount .2s ease;
 }
 
 .mdl-header{
   border-bottom: 1px solid #dee2e6;
   display: flex;
-  padding: 5px 20px;
+  padding: 10px 20px;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 .mdl-close-btn{

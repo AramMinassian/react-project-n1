@@ -1,0 +1,22 @@
+.Contact{
+  margin: 30px;
+}
+
+.Contact h1{
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.Contact .contact-form{
+  padding: 0 45px;
+}
+
+.Contact .contact-form .field{
+  margin-bottom: 15px;
+}
+
+.Contact .contact-form .btn{
+  display: block;
+  padding: 8px 30px;
+  margin-left: auto;
+}

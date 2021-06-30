@@ -12,7 +12,10 @@ class TaskInputOrEditModal extends React.Component {
         warning: false,
     }
 
+    inputRef = React.createRef();
+
     componentDidMount() {
+        this.inputRef.current.focus();
         const { taskToEdit } = this.props;
         if (taskToEdit) {
             this.setState({
@@ -72,9 +75,8 @@ class TaskInputOrEditModal extends React.Component {
             this.setState({ warning: true });
             return;
         };
-
         if(new Date(date) < new Date()){
-            date = taskToEdit.date;
+            date = taskToEdit.date.slice(0,10);
         }
 
         const editedTask = {
@@ -90,11 +92,12 @@ class TaskInputOrEditModal extends React.Component {
     render() {
         const { toggleTaskInputOrEditMode, taskToEdit } = this.props;
         const { title, description, date, warning } = this.state;
+        const cardTitle = (taskToEdit) ? "Edit task" : "Add new task"
         return (
             <div className="mdl-back">
                 <div className="mdl-wrapper">
                     <div className="mdl-header">
-                        <span className="mdl-info">Add new task</span>
+                        <span className="mdl-info">{cardTitle}</span>
                     </div>
                     <div className="mdl-body tsk-input">
                         {warning && <small>task must have a title</small>}
@@ -104,6 +107,7 @@ class TaskInputOrEditModal extends React.Component {
                             name="title"
                             value={title}
                             onChange={this.handleChange}
+                            ref={this.inputRef}
                         />
                         <FormControl
                             className="tsk-textarea-field"
@@ -149,7 +153,7 @@ class TaskInputOrEditModal extends React.Component {
 TaskInputOrEditModal.propTypes = {
     taskToEdit: PropTypes.object,
     toggleTaskInputOrEditMode: PropTypes.func.isRequired,
-    addTask: PropTypes.func.isRequired,
+    addTask: PropTypes.func,
     editTask: PropTypes.func.isRequired
 };
 
