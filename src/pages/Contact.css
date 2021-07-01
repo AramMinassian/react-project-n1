@@ -8,11 +8,16 @@
 }
 
 .Contact .contact-form{
-  padding: 0 45px;
+  padding: 0 15%;
 }
 
 .Contact .contact-form .field{
   margin-bottom: 15px;
+}
+
+.Contact .contact-form .error{
+  color: red;
+  padding-left: 0.75rem;
 }
 
 .Contact .contact-form .btn{
