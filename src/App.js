@@ -7,52 +7,61 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import SingleTask from "./pages/SingleTask";
 import NotFound from "./pages/NotFound";
+import ProcessSpinner from "./components/ProcessSpinner";
+import { connect } from "react-redux";
 
 
-function App() {
+function App({ inProcess }) {
     return (
         <div className="App">
             <Router>
                 <NavMenu />
                 <Switch>
-                    <Route 
+                    <Route
                         path="/"
                         component={Home}
                         exact={true}
                     />
-                    <Route 
+                    <Route
                         path="/home"
                         component={Home}
                         exact={true}
                     />
-                    <Route 
+                    <Route
                         path="/about"
                         component={About}
                         exact={true}
                     />
-                    <Route 
+                    <Route
                         path="/contact"
                         component={Contact}
                         exact={true}
                     />
-                    <Route 
+                    <Route
                         path="/task/:taskId"
                         component={SingleTask}
                         exact={true}
                     />
-                    <Route 
+                    <Route
                         path="/not-found"
                         component={NotFound}
                         exact={true}
                     />
-                    <Redirect 
+                    <Redirect
                         to="/not-found"
                     />
                 </Switch>
             </Router>
+            {inProcess && <ProcessSpinner />}
         </div>
 
     )
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        inProcess: state.inProcess
+    }
+}
+
+export default connect(mapStateToProps)(App);

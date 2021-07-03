@@ -2,24 +2,25 @@ import React from "react";
 import PropTypes from "prop-types";
 import Task from "./Task";
 import { Row } from "react-bootstrap";
+import { connect } from "react-redux";
 
 
 class TaskList extends React.PureComponent {
   render() {
-    const { 
-      tasks, toggleTaskInputOrEditMode, toggleConfirmDeleteMode, deleteTask, 
-      onSelectMode, selectTask, selectedTasks 
-          } = this.props;
-    const taskList = tasks.map((task) => <Task 
-                                            key={task._id} 
-                                            task={task} 
-                                            toggleTaskInputOrEditMode={toggleTaskInputOrEditMode}
-                                            toggleConfirmDeleteMode={toggleConfirmDeleteMode}
-                                            deleteTask={deleteTask}
-                                            onSelectMode={onSelectMode}
-                                            selectTask={selectTask}
-                                            selectedTasks={selectedTasks}
-                                          />)
+    const {
+      tasks, toggleTaskInputOrEditMode, toggleConfirmDeleteMode,
+      onSelectMode, selectTask, selectedTaskIds
+    } = this.props;
+    const taskList = tasks.map((task) => <Task
+      key={task._id}
+      task={task}
+      toggleTaskInputOrEditMode={toggleTaskInputOrEditMode}
+      toggleConfirmDeleteMode={toggleConfirmDeleteMode}
+      onSelectMode={onSelectMode}
+      selectTask={selectTask}
+      selectedTaskIds={selectedTaskIds}
+    />);
+    if (taskList.length === 0) return <div className="empty-message">no task to show</div>
     return (
       <Row>
         {taskList}
@@ -29,13 +30,18 @@ class TaskList extends React.PureComponent {
 }
 
 TaskList.propType = {
-  tasks: PropTypes.array.isRequired,
   toggleTaskInputOrEditMode: PropTypes.func.isRequired,
   toggleConfirmDeleteMode: PropTypes.func.isRequired,
-  deleteTask: PropTypes.func.isRequired,
   onSelectMode: PropTypes.bool.isRequired,
   selectTask: PropTypes.func.isRequired,
-  selectedTasks: PropTypes.object.isRequired
+  selectedTaskIds: PropTypes.object.isRequired
 }
 
-export default TaskList;
+
+const mapStateToProps = (state) => {
+  return {
+    tasks: state.tasks
+  }
+}
+
+export default connect(mapStateToProps)(TaskList);

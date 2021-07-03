@@ -3,6 +3,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, FormControl } from "react-bootstrap";
 import { dateFormatter } from "../utilityFunctions";
+import { connect } from "react-redux";
+import { addTask, editTask } from "../reduxStore/actions";
 
 class TaskInputOrEditModal extends React.Component {
     state = {
@@ -50,7 +52,7 @@ class TaskInputOrEditModal extends React.Component {
             return
         };
 
-        if(new Date(date) < new Date()){
+        if (new Date(date) < new Date()) {
             date = dateFormatter(new Date());
         }
 
@@ -75,8 +77,8 @@ class TaskInputOrEditModal extends React.Component {
             this.setState({ warning: true });
             return;
         };
-        if(new Date(date) < new Date()){
-            date = taskToEdit.date.slice(0,10);
+        if (new Date(date) < new Date()) {
+            date = taskToEdit.date.slice(0, 10);
         }
 
         const editedTask = {
@@ -153,8 +155,13 @@ class TaskInputOrEditModal extends React.Component {
 TaskInputOrEditModal.propTypes = {
     taskToEdit: PropTypes.object,
     toggleTaskInputOrEditMode: PropTypes.func.isRequired,
-    addTask: PropTypes.func,
-    editTask: PropTypes.func.isRequired
 };
 
-export default TaskInputOrEditModal
+
+const mapDispatchToProps = {
+    addTask,
+    editTask
+}
+
+
+export default connect(null, mapDispatchToProps)(TaskInputOrEditModal)

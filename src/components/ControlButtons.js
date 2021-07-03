@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Row, Button } from "react-bootstrap";
+import { connect } from "react-redux";
 
 
 class ControlButtons extends React.PureComponent {
 
   render() {
     const { 
-      tasks, onSelectMode, toggleSelectMode, selectedTasks, 
+      tasks, onSelectMode, toggleSelectMode, selectedTaskIds, 
       selectAllTasks, deselectAllTasks , toggleConfirmDeleteMode,
       toggleTaskInputOrEditMode
           } = this.props;
@@ -27,11 +28,11 @@ class ControlButtons extends React.PureComponent {
           <Button
             variant="warning"
             disabled={!onSelectMode}
-            onClick={(selectedTasks.size !== tasks.length) ? selectAllTasks : deselectAllTasks}
-          >{(tasks.length === 0 || selectedTasks.size !== tasks.length) ? "Select All" : "Deselect All"}</Button>
+            onClick={(selectedTaskIds.size !== tasks.length) ? selectAllTasks : deselectAllTasks}
+          >{(tasks.length === 0 || selectedTaskIds.size !== tasks.length) ? "Select All" : "Deselect All"}</Button>
           <Button
             variant="danger"
-            disabled={!onSelectMode || !selectedTasks.size}
+            disabled={!onSelectMode || !selectedTaskIds.size}
             onClick={() => toggleConfirmDeleteMode()}
           >Delete</Button>
         </div>
@@ -41,14 +42,20 @@ class ControlButtons extends React.PureComponent {
 }
 
 ControlButtons.propTypes = {
-  tasks: PropTypes.array.isRequired,
   toggleTaskInputOrEditMode: PropTypes.func.isRequired,
   toggleSelectMode: PropTypes.func.isRequired,
   onSelectMode: PropTypes.bool.isRequired,
-  selectedTasks: PropTypes.object.isRequired,
+  selectedTaskIds: PropTypes.object.isRequired,
   selectAllTasks: PropTypes.func.isRequired,
   deselectAllTasks: PropTypes.func.isRequired,
   toggleConfirmDeleteMode: PropTypes.func.isRequired
 }
 
-export default ControlButtons;
+
+const mapStateToProps = (state) => {
+  return {
+    tasks: state.tasks
+  }
+}
+
+export default connect(mapStateToProps)(ControlButtons);

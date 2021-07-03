@@ -100,6 +100,7 @@ class Contact extends React.Component {
                             name="name"
                             value={formData.name}
                             onChange={this.handleChange}
+                            autoComplete="off"
                         />
                         {formError.name && <small
                             className="error"
@@ -112,6 +113,7 @@ class Contact extends React.Component {
                             name="email"
                             value={formData.email}
                             onChange={this.handleChange}
+                            autoComplete="off"
                         />
                         {formError.email && <small
                             className="error"
@@ -125,6 +127,7 @@ class Contact extends React.Component {
                             name="message"
                             value={formData.message}
                             onChange={this.handleChange}
+                            autoComplete="off"
                         />
                         {formError.message && <small
                             className="error"
