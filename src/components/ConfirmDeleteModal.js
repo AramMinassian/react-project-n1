@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
+import { deleteTask, deleteSelectedTasks } from "../reduxStore/actions";
+
+
 
 class ConfirmDeleteModal extends React.Component {
 
@@ -17,25 +21,26 @@ class ConfirmDeleteModal extends React.Component {
   }
 
   handleDelete = () => {
-    const { deleteSelectedTasks, toggleConfirmDeleteMode, deleteTask, taskToDelete } = this.props;
+    const { deleteSelectedTasks, selectedTaskIds,toggleSelectMode, toggleConfirmDeleteMode, deleteTask, taskToDelete } = this.props;
     if (taskToDelete) {
       deleteTask(taskToDelete)
     } else {
-      deleteSelectedTasks();
+      deleteSelectedTasks(selectedTaskIds);
+      toggleSelectMode();
     }
     toggleConfirmDeleteMode();
   }
 
   render() {
-    const { toggleConfirmDeleteMode, selectedTasks, taskToDelete } = this.props;
+    const { toggleConfirmDeleteMode, selectedTaskIds, taskToDelete } = this.props;
 
     let deleteModalMessage = "";
-    if(taskToDelete){
+    if (taskToDelete) {
       deleteModalMessage = "Are you sure you want to delete the task ?"
     } else {
-      deleteModalMessage = `Are you sure you want to delete selected task${selectedTasks.size > 1 ? "s" : ""} ?`;
+      deleteModalMessage = `Are you sure you want to delete selected task${selectedTaskIds.size > 1 ? "s" : ""} ?`;
     }
-      
+
     return (
       <div
         className="mdl-back"
@@ -57,14 +62,14 @@ class ConfirmDeleteModal extends React.Component {
           <div className="mdl-footer">
             <Button
               className="mdl-action-btn"
-              variant="primary"
-              onClick={() => toggleConfirmDeleteMode()}
-            >Cancel</Button>
-            <Button
-              className="mdl-action-btn"
               variant="danger"
               onClick={this.handleDelete}
             >Delete</Button>
+            <Button
+              className="mdl-action-btn"
+              variant="primary"
+              onClick={() => toggleConfirmDeleteMode()}
+            >Cancel</Button>
           </div>
         </div>
       </div>
@@ -74,10 +79,16 @@ class ConfirmDeleteModal extends React.Component {
 
 ConfirmDeleteModal.propTypes = {
   toggleConfirmDeleteMode: PropTypes.func.isRequired,
+  toggleSelectMode: PropTypes.func,
   taskToDelete: PropTypes.string,
-  deleteTask: PropTypes.func.isRequired,
-  selectedTasks: PropTypes.object,
-  deleteSelectedTasks: PropTypes.func
+  selectedTaskIds: PropTypes.object,
 }
 
-export default ConfirmDeleteModal;
+
+
+const mapDispatchToProps = {
+  deleteTask,
+  deleteSelectedTasks
+}
+
+export default connect(null, mapDispatchToProps)(ConfirmDeleteModal);

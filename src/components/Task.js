@@ -17,7 +17,7 @@ class Task extends React.PureComponent {
 
   render() {
     const {
-      task, onSelectMode, selectedTasks, toggleTaskInputOrEditMode,
+      task, onSelectMode, selectedTaskIds, toggleTaskInputOrEditMode,
       toggleConfirmDeleteMode
     } = this.props;
     return (
@@ -28,7 +28,7 @@ class Task extends React.PureComponent {
         lg={3}
         xl={2}>
         <Card
-          className={`Task ${selectedTasks.has(task._id) ? "Selected" : ""} ${onSelectMode ? "onSelectMode" : ""}`}
+          className={`Task ${selectedTaskIds.has(task._id) ? "Selected" : ""} ${onSelectMode ? "onSelectMode" : ""}`}
           onClick={this.handleSelect}
         >
           <Card.Body>
@@ -68,10 +68,9 @@ Task.propTypes = {
   task: PropTypes.object.isRequired,
   toggleTaskInputOrEditMode: PropTypes.func.isRequired,
   toggleConfirmDeleteMode: PropTypes.func.isRequired,
-  deleteTask: PropTypes.func.isRequired,
   onSelectMode: PropTypes.bool.isRequired,
   selectTask: PropTypes.func.isRequired,
-  selectedTasks: PropTypes.object.isRequired
+  selectedTaskIds: PropTypes.object.isRequired
 }
 
 export default Task

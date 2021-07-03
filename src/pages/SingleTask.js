@@ -103,7 +103,7 @@ class SingleTask extends React.Component {
 
   render() {
     const { task, onTaskEditMode, onConfirmDeleteMode } = this.state;
-    if (!task) return <div>"no task to show"</div>
+    if (!task) return <div className="empty-message">task does not exist</div>
     return (
       <div className="SingleTask">
         <Card>
