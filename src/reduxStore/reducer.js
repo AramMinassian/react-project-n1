@@ -1,6 +1,7 @@
 
 const defaultState = {
   tasks: [],
+  task: null,
   inProcess: false
 }
 
@@ -21,6 +22,16 @@ function reducer(state = defaultState, action) {
       return {
         ...state,
         tasks,
+        task: null,
+        inProcess: false
+      }
+    }
+    /*--------------------------------------------------------------------*/
+    case "GET_SINGLE_TASK": {
+      const task = action.task;
+      return {
+        ...state,
+        task,
         inProcess: false
       }
     }
@@ -58,9 +69,11 @@ function reducer(state = defaultState, action) {
       const tasks = state.tasks.map(task => {
         return (task._id === action.editedTask._id) ? action.editedTask : task;
       })
+      const task = (action.fromSingleTask) ? action.editedTask : null;
       return {
         ...state,
         tasks,
+        task,
         inProcess: false
       }
     }

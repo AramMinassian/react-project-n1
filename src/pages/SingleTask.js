@@ -6,87 +6,18 @@ import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { dateDispalyFormatter } from "../utilityFunctions";
+import { connect } from "react-redux";
+import { getSingleTask, deleteTask } from "../reduxStore/actions";
 
 class SingleTask extends React.Component {
   state = {
-    task: null,
     onTaskEditMode: false,
     onConfirmDeleteMode: false,
   }
 
   componentDidMount() {
     const { taskId } = this.props.match.params;
-    this.getSingleTask(taskId);
-  }
-
-  getSingleTask = (taskId) => {
-    fetch(`http://localhost:3001/task/${taskId}`, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(async (response) => {
-        const result = await response.json();
-        if (response.status >= 400 && response.status < 600) {
-          if (result.error) {
-            throw result.error;
-          } else {
-            throw new Error("Something went wrong");
-          }
-        }
-        this.setState({ task: result });
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
-  deleteTask = () => {
-    const { taskId } = this.props.match.params;
-    fetch(`http://localhost:3001/task/${taskId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(async (response) => {
-        const result = await response.json();
-        if (response.status >= 400 && response.status < 600) {
-          if (result.error) {
-            throw result.error;
-          } else {
-            throw new Error("Something went wrong");
-          }
-        }
-        this.props.history.push("/");
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
-  editTask = (editedTask) => {
-    fetch(`http://localhost:3001/task/${editedTask._id}`, {
-      method: "PUT",
-      body: JSON.stringify(editedTask),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(async (response) => {
-        const result = await response.json();
-        if (response.status >= 400 && response.status < 600) {
-          if (result.error) {
-            throw result.error;
-          } else {
-            throw new Error("Something went wrong");
-          }
-        }
-        this.setState({ task: editedTask });
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    this.props.getSingleTask(taskId);
   }
 
   toggleTaskEditMode = () => {
@@ -102,7 +33,8 @@ class SingleTask extends React.Component {
   }
 
   render() {
-    const { task, onTaskEditMode, onConfirmDeleteMode } = this.state;
+    const { onTaskEditMode, onConfirmDeleteMode } = this.state;
+    const { task } = this.props;
     if (!task) return <div className="empty-message">task does not exist</div>
     return (
       <div className="SingleTask">
@@ -111,7 +43,7 @@ class SingleTask extends React.Component {
             <Card.Title>{task.title}</Card.Title>
             <Card.Text>
               Description: {task.description || <span className="desc-missing-msg">no description provided</span>}
-              </Card.Text>
+            </Card.Text>
             <Card.Text>Completion Date: {dateDispalyFormatter(task.date)}</Card.Text>
             <div className="tsk-btns">
               <Button
@@ -128,12 +60,12 @@ class SingleTask extends React.Component {
         {onTaskEditMode && <TaskInputOrEditModal
           taskToEdit={task}
           toggleTaskInputOrEditMode={this.toggleTaskEditMode}
-          editTask={this.editTask}
+          isFromSingleTask={true}
         />}
         {onConfirmDeleteMode && <ConfirmDeleteModal
           toggleConfirmDeleteMode={this.toggleConfirmDeleteMode}
           taskToDelete={task._id}
-          deleteTask={this.deleteTask}
+          isFromSingleTask={true}
         />}
       </div>
 
@@ -141,4 +73,16 @@ class SingleTask extends React.Component {
   }
 }
 
-export default SingleTask;
+const mapStateToProps = (state) => {
+  return {
+    task: state.task
+  }
+}
+
+const mapDispatchToProps = {
+  getSingleTask,
+  deleteTask
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);

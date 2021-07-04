@@ -10,7 +10,7 @@ function ProcessSpinner(){
         variant="primary"
         animation="border"
         className="ProcessSpinner"
-      ><span className="sr-only">Loading...</span></Spinner>
+      ></Spinner>
     </div>
   )
 }

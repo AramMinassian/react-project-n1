@@ -1,6 +1,7 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
+import history from "./components/history";
 import NavMenu from "./components/NavMenu";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -14,7 +15,7 @@ import { connect } from "react-redux";
 function App({ inProcess }) {
     return (
         <div className="App">
-            <Router>
+            <Router history={history}>
                 <NavMenu />
                 <Switch>
                     <Route

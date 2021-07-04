@@ -1,4 +1,5 @@
-import { request } from "../utilityFunctions"
+import { request } from "../utilityFunctions";
+import history from "../components/history";
 
 
 export function getAllTasks() {
@@ -7,6 +8,19 @@ export function getAllTasks() {
     request("http://localhost:3001/task")
       .then(tasks => {
         dispatch({ type: "GET_ALL_TASKS", tasks });
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  }
+}
+
+export function getSingleTask(taskId) {
+  return dispatch => {
+    dispatch({type: "PROCESS"});
+    request(`http://localhost:3001/task/${taskId}`)
+      .then(task => {
+        dispatch({ type: "GET_SINGLE_TASK", task });
       })
       .catch(error => {
         console.log(error)
@@ -27,12 +41,13 @@ export function addTask(newTask) {
   }
 }
 
-export function deleteTask(taskId) {
+export function deleteTask(taskId, fromSingleTask ) {
   return dispatch => {
     dispatch({type: "PROCESS"});
     request(`http://localhost:3001/task/${taskId}`, "DELETE")
       .then(() => {
         dispatch({ type: "DELETE_TASK", taskId });
+        if(fromSingleTask) history.push("/");
       })
       .catch(error => {
         console.log(error)
@@ -54,12 +69,12 @@ export function deleteSelectedTasks(selectedTaskIds) {
   }
 }
 
-export function editTask(editedTask) {
+export function editTask(editedTask, fromSingleTask) {
   return dispatch => {
     dispatch({type: "PROCESS"});
     request(`http://localhost:3001/task/${editedTask._id}`, "PUT", editedTask)
       .then(() => {
-        dispatch({ type: "EDIT_TASK", editedTask });
+        dispatch({ type: "EDIT_TASK", editedTask, fromSingleTask });
       })
       .catch(error => {
         console.log(error)
