@@ -72,7 +72,7 @@ class TaskInputOrEditModal extends React.Component {
     handleEdit = () => {
         const { title, description } = this.state;
         let date = this.state.date || dateFormatter(new Date());
-        const { editTask, toggleTaskInputOrEditMode, taskToEdit } = this.props
+        const { editTask, toggleTaskInputOrEditMode, taskToEdit, isFromSingleTask } = this.props
         if (!title.trim()) {
             this.setState({ warning: true });
             return;
@@ -87,7 +87,7 @@ class TaskInputOrEditModal extends React.Component {
             description,
             date
         }
-        editTask(editedTask);
+        editTask(editedTask, isFromSingleTask);
         toggleTaskInputOrEditMode();
     }
 
@@ -155,6 +155,7 @@ class TaskInputOrEditModal extends React.Component {
 TaskInputOrEditModal.propTypes = {
     taskToEdit: PropTypes.object,
     toggleTaskInputOrEditMode: PropTypes.func.isRequired,
+    isFromSingleTask: PropTypes.bool
 };
 
 

@@ -21,9 +21,9 @@ class ConfirmDeleteModal extends React.Component {
   }
 
   handleDelete = () => {
-    const { deleteSelectedTasks, selectedTaskIds,toggleSelectMode, toggleConfirmDeleteMode, deleteTask, taskToDelete } = this.props;
+    const { deleteSelectedTasks, selectedTaskIds,toggleSelectMode, toggleConfirmDeleteMode, deleteTask, taskToDelete, isFromSingleTask } = this.props;
     if (taskToDelete) {
-      deleteTask(taskToDelete)
+      deleteTask(taskToDelete, isFromSingleTask)
     } else {
       deleteSelectedTasks(selectedTaskIds);
       toggleSelectMode();
@@ -81,6 +81,7 @@ ConfirmDeleteModal.propTypes = {
   toggleConfirmDeleteMode: PropTypes.func.isRequired,
   toggleSelectMode: PropTypes.func,
   taskToDelete: PropTypes.string,
+  fromSingleTask: PropTypes.bool,
   selectedTaskIds: PropTypes.object,
 }
 

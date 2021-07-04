@@ -95,12 +95,13 @@ class Todo extends React.Component {
                 {onTaskInputOrEditMode && <TaskInputOrEditModal
                     taskToEdit={taskToEdit}
                     toggleTaskInputOrEditMode={this.toggleTaskInputOrEditMode}
+                    isFromSingleTask={false}
                 />}
                 {onConfirmDeleteMode && <ConfirmDeleteModal
                     toggleConfirmDeleteMode={this.toggleConfirmDeleteMode}
                     toggleSelectMode={this.toggleSelectMode}
                     taskToDelete={taskToDelete}
-                    deleteTask={this.deleteTask}
+                    isFromSingleTask={false}
                     selectedTaskIds={selectedTaskIds}
                 />}
 
