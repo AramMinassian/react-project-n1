@@ -1,8 +1,10 @@
 import React from "react";
+import SearchAndFilter from "./SearchAndFilter";
 import TaskInputOrEditModal from "./TaskInputOrEditModal";
 import TaskList from "./TaskList";
 import ControlButtons from "./ControlButtons";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import FilterModal from "./FilterModal";
 import { Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getAllTasks } from "../reduxStore/actions";
@@ -16,6 +18,9 @@ class Todo extends React.Component {
         onSelectMode: false,
         selectedTaskIds: new Set(),
         onConfirmDeleteMode: false,
+        onFilterMode: false,
+        search: "",
+        filterParams: {}
     }
 
     componentDidMount() {
@@ -44,6 +49,12 @@ class Todo extends React.Component {
 
     }
 
+    toggleFilterMode = () => {
+        this.setState({
+            onFilterMode: !this.state.onFilterMode,
+        })
+    }
+
     selectTask = (taskId) => {
         const selectedTaskIds = new Set(this.state.selectedTaskIds);
         if (selectedTaskIds.has(taskId)) {
@@ -65,15 +76,33 @@ class Todo extends React.Component {
         this.setState({ selectedTaskIds });
     }
 
+    setSearchParams = (newParams) => {
+        this.setState({
+            search: newParams
+        })
+    }
+    setFilterParams = (newParams) => {
+        this.setState({
+            filterParams: newParams
+        })
+    }
+
     render() {
         const {
             onSelectMode, selectedTaskIds, onConfirmDeleteMode,
-            onTaskInputOrEditMode, taskToEdit, taskToDelete
+            onTaskInputOrEditMode, taskToEdit, taskToDelete, onFilterMode,
+            search, filterParams
         } = this.state;
 
         return (
             <>
                 <Container>
+                    <SearchAndFilter
+                        onSelectMode={onSelectMode}
+                        toggleFilterMode={this.toggleFilterMode}
+                        setSearchParams={this.setSearchParams}
+                        filterParams={filterParams}
+                    />
                     <ControlButtons
                         toggleTaskInputOrEditMode={this.toggleTaskInputOrEditMode}
                         toggleSelectMode={this.toggleSelectMode}
@@ -103,6 +132,12 @@ class Todo extends React.Component {
                     taskToDelete={taskToDelete}
                     isFromSingleTask={false}
                     selectedTaskIds={selectedTaskIds}
+                />}
+                {onFilterMode && <FilterModal
+                    toggleFilterMode={this.toggleFilterMode}
+                    search={search}
+                    setFilterParams={this.setFilterParams}
+                    filterParams={filterParams}
                 />}
 
             </>
