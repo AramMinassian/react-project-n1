@@ -1,3 +1,4 @@
+import styles from "../styles/ControlButtons.module.css";
 import React from "react";
 import PropTypes from "prop-types";
 import { Row, Button } from "react-bootstrap";
@@ -14,7 +15,7 @@ class ControlButtons extends React.PureComponent {
           } = this.props;
     return (
       <Row>
-        <div className="ControlButtons">
+        <div className={styles.controlButtons}>
         <Button
             variant="primary"
             onClick={() => toggleTaskInputOrEditMode()}

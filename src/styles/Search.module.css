@@ -1,9 +1,9 @@
-.SearchAndFilter{
+.search{
   display: flex;
   margin: 20px 0;
 }
 
-.SearchAndFilter .search-field{
+.search input{
   flex: 1;
   border: 1px solid #ced4da;
   border-right: none;
@@ -14,14 +14,12 @@
   line-height: 1.5;
 }
 
-.SearchAndFilter .search-field:focus{
+.search input:focus{
   border: 1px solid #007bff;
   outline: none;
 }
 
-
-.SearchAndFilter .search-btn,
-.SearchAndFilter .filter-btn{
+.search button{
   border: 1px solid #ced4da;
   border-left: none;
   padding: .375rem .75rem;
@@ -32,25 +30,21 @@
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
 }
 
-.SearchAndFilter .filter-btn{
+.search button:last-of-type{
   border-radius: 0 0.25rem 0.25rem 0;
 }
 
-.SearchAndFilter .search-btn:hover,
-.SearchAndFilter .filter-btn:hover{
+.search button:hover{
   color: #fff;
   background-color: #007bff;
   border-color: #007bff;
-  
 }
 
-.SearchAndFilter .search-btn:disabled,
-.SearchAndFilter .filter-btn:disabled{
+.search button:disabled{
   color: #ced4da;
 }
 
-.SearchAndFilter .search-btn:disabled:hover,
-.SearchAndFilter .filter-btn:disabled:hover{
+.search button:disabled:hover{
   color: #ced4da;
   background-color: transparent;
   border-color: #ced4da;

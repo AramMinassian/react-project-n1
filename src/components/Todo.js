@@ -1,5 +1,5 @@
 import React from "react";
-import SearchAndFilter from "./SearchAndFilter";
+import Search from "./Search";
 import TaskInputOrEditModal from "./TaskInputOrEditModal";
 import TaskList from "./TaskList";
 import ControlButtons from "./ControlButtons";
@@ -97,7 +97,7 @@ class Todo extends React.Component {
         return (
             <>
                 <Container>
-                    <SearchAndFilter
+                    <Search
                         onSelectMode={onSelectMode}
                         toggleFilterMode={this.toggleFilterMode}
                         setSearchParams={this.setSearchParams}
@@ -139,7 +139,6 @@ class Todo extends React.Component {
                     setFilterParams={this.setFilterParams}
                     filterParams={filterParams}
                 />}
-
             </>
         )
     }

@@ -1,37 +1,61 @@
-import "./NavMenu.css"
+import styles from "../styles/NavMenu.module.css";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 
 class NavMenu extends React.Component {
+
+  state = {
+    isOpened: false
+  }
+
+  toggleMenu = () => {
+    this.setState({
+      isOpened: !this.state.isOpened
+    })
+  }
+
   render() {
+
+    const { isOpened } = this.state;
+
     return (
-      <div className="NavMenu">
-        <div className="n-logo">
+      <>
+        <div className={styles.navToggle}>
+          {isOpened ? <FontAwesomeIcon onClick={this.toggleMenu} icon={faTimes} /> : <FontAwesomeIcon onClick={this.toggleMenu} icon={faBars} />}
+        </div>
+        <div className={`${styles.navMenu} ${isOpened ? styles.opened : styles.closed}`}>
+          <div className={styles.navMenuLogo}>
+            <NavLink
+              to="/"
+              exact={true}
+            >To-Do</NavLink>
+          </div>
           <NavLink
+            className={styles.navMenuLink}
+            activeClassName={styles.navMenuLinkActive}
             to="/"
             exact={true}
-          >To-Do</NavLink>
+            onClick={this.toggleMenu}
+          >Home</NavLink>
+          <NavLink
+            className={styles.navMenuLink}
+            activeClassName={styles.navMenuLinkActive}
+            to="/about"
+            exact={true}
+            onClick={this.toggleMenu}
+          >About</NavLink>
+          <NavLink
+            className={styles.navMenuLink}
+            activeClassName={styles.navMenuLinkActive}
+            to="/contact"
+            exact={true}
+            onClick={this.toggleMenu}
+          >Contact</NavLink>
         </div>
-        <NavLink
-          className="n-link"
-          activeClassName="n-link-active"
-          to="/"
-          exact={true}
-        >Home</NavLink>
-        <NavLink
-          className="n-link"
-          activeClassName="n-link-active"
-          to="/about"
-          exact={true}
-        >About</NavLink>
-        <NavLink
-          className="n-link"
-          activeClassName="n-link-active"
-          to="/contact"
-          exact={true}
-        >Contact</NavLink>
-      </div>
+      </>
     )
   }
 }

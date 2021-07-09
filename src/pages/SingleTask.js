@@ -1,4 +1,4 @@
-import "./SingleTask.css";
+import styles from "../styles/SingleTask.module.css"
 import React from "react";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import TaskInputOrEditModal from "../components/TaskInputOrEditModal";
@@ -37,15 +37,15 @@ class SingleTask extends React.Component {
     const { task } = this.props;
     if (!task) return <div className="empty-message">task does not exist</div>
     return (
-      <div className="SingleTask">
+      <div className={styles.singleTask}>
         <Card>
           <Card.Body>
             <Card.Title>{task.title}</Card.Title>
             <Card.Text>
-              Description: {task.description || <span className="desc-missing-msg">no description provided</span>}
+              Description: {task.description || <span className="empty-message">no description provided</span>}
             </Card.Text>
             <Card.Text>Completion Date: {dateDispalyFormatter(task.date)}</Card.Text>
-            <div className="tsk-btns">
+            <div>
               <Button
                 variant="warning"
                 onClick={this.toggleTaskEditMode}

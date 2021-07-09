@@ -1,0 +1,32 @@
+.task{
+  margin: 10px 0;
+}
+
+.taskDate {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+.taskDate span{
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.onSelectMode{
+  cursor: pointer;
+  border-width: 2px;
+  opacity: 0.6;
+}
+
+.selected{
+  border: 2px solid rgb(117, 4, 4);
+  opacity: 1;
+}
+
+.taskButtons{
+  display: flex;
+  justify-content: flex-start;
+}
+.taskButtons button{
+  margin-right: 10px;
+}

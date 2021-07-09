@@ -1,3 +1,4 @@
+import styles from "../styles/Task.module.css";
 import React from "react";
 import PropTypes from "prop-types";
 import { Col, Card, Button } from "react-bootstrap";
@@ -28,23 +29,22 @@ class Task extends React.PureComponent {
         lg={3}
         xl={2}>
         <Card
-          className={`Task ${selectedTaskIds.has(task._id) ? "Selected" : ""} ${onSelectMode ? "onSelectMode" : ""}`}
+          className={`${styles.task} ${selectedTaskIds.has(task._id) ? styles.selected : ""} ${onSelectMode ? styles.onSelectMode : ""}`}
           onClick={this.handleSelect}
         >
           <Card.Body>
-            
             <Card.Title>
               {
                 onSelectMode ? truncText(task.title) : <Link to={`/task/${task._id}`}>{truncText(task.title)}</Link>
               }
             </Card.Title>
             <Card.Text>
-              <span className="tsk-date">
+              <span className={styles.taskDate}>
                 <FontAwesomeIcon icon={faCalendarAlt} />
                 <span>{dateDispalyFormatter(task.date)}</span>
               </span>
             </Card.Text>
-            <div className="tsk-btns">
+            <div className={styles.taskButtons}>
               <Button
                 variant="warning"
                 disabled={onSelectMode}
@@ -74,3 +74,5 @@ Task.propTypes = {
 }
 
 export default Task
+
+

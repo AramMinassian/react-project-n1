@@ -1,26 +1,28 @@
-.Contact{
+.contact{
   margin: 30px;
 }
 
-.Contact h1{
+.contact h1{
   text-align: center;
   margin-bottom: 25px;
 }
 
-.Contact .contact-form{
-  padding: 0 15%;
+.contact .contactForm{
+  max-width: 700px;
+  margin: auto;
 }
 
-.Contact .contact-form .field{
+.contactForm input,
+.contactForm textarea{
   margin-bottom: 15px;
 }
 
-.Contact .contact-form .error{
+.contactForm .error{
   color: red;
   padding-left: 0.75rem;
 }
 
-.Contact .contact-form .btn{
+.contactForm button{
   display: block;
   padding: 8px 30px;
   margin-left: auto;

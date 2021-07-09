@@ -1,4 +1,4 @@
-import "./Contact.css";
+import styles from "../styles/Contact.module.css"
 import React from "react";
 import { Button, FormControl } from "react-bootstrap";
 import validator from "validator";
@@ -91,10 +91,10 @@ class Contact extends React.Component {
     render() {
         const { formError, formData } = this.state;
         return (
-            <div className="Contact">
+            <div className={styles.contact}>
                 <h1>Contact us</h1>
-                <div className="contact-form">
-                    <div className="field">
+                <div className={styles.contactForm}>
+                    <div>
                         <FormControl
                             placeholder="Name"
                             name="name"
@@ -103,10 +103,10 @@ class Contact extends React.Component {
                             autoComplete="off"
                         />
                         {formError.name && <small
-                            className="error"
+                            className={styles.error}
                         >Please provide a name</small>}
                     </div>
-                    <div className="field">
+                    <div>
                         <FormControl
                             type="email"
                             placeholder="Email"
@@ -116,10 +116,10 @@ class Contact extends React.Component {
                             autoComplete="off"
                         />
                         {formError.email && <small
-                            className="error"
+                            className={styles.error}
                         >Please provide a formerly formatted email address</small>}
                     </div>
-                    <div className="field">
+                    <div>
                         <FormControl
                             as="textarea"
                             rows={7}
@@ -130,11 +130,10 @@ class Contact extends React.Component {
                             autoComplete="off"
                         />
                         {formError.message && <small
-                            className="error"
+                            className={styles.error}
                         >Please provide a message</small>}
                     </div>
                     <Button
-                        className="btn"
                         variant="primary"
                         onClick={this.handleSend}
                     >SEND</Button>

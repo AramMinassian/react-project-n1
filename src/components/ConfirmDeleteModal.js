@@ -1,4 +1,4 @@
-import "./Modals.css";
+import styles from "../styles/Modals.module.css";
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
@@ -43,30 +43,28 @@ class ConfirmDeleteModal extends React.Component {
 
     return (
       <div
-        className="mdl-back"
+        className={styles.modalBg}
         onClick={this.handleSideClick}
       >
-        <div className="mdl-wrapper">
-          <div className="mdl-header">
+        <div className={`${styles.modalWrapper} ${styles.deleteModal}`}>
+          <div className={styles.modalHeader}>
             <span
-              className="mdl-info"
+              className={styles.modalInfo}
             ><FontAwesomeIcon icon={faExclamationTriangle} color="#ffc107" /></span>
             <span
-              className="mdl-close-btn"
+              className={styles.modalCloseButton}
               onClick={() => toggleConfirmDeleteMode()}
             ><FontAwesomeIcon icon={faTimes} /></span>
           </div>
-          <div className="mdl-body">
+          <div className={styles.modalBody}>
             <p>{deleteModalMessage}</p>
           </div>
-          <div className="mdl-footer">
+          <div className={styles.modalFooter}>
             <Button
-              className="mdl-action-btn"
               variant="danger"
               onClick={this.handleDelete}
             >Delete</Button>
             <Button
-              className="mdl-action-btn"
               variant="primary"
               onClick={() => toggleConfirmDeleteMode()}
             >Cancel</Button>
