@@ -4,10 +4,10 @@ import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import TaskInputOrEditModal from "../components/TaskInputOrEditModal";
 import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faRedoAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { dateDispalyFormatter } from "../utilityFunctions";
 import { connect } from "react-redux";
-import { getSingleTask, deleteTask } from "../reduxStore/actions";
+import { getSingleTask, deleteTask, editTask } from "../reduxStore/actions";
 
 class SingleTask extends React.Component {
   state = {
@@ -32,6 +32,16 @@ class SingleTask extends React.Component {
     })
   }
 
+  updateStatus = (status) => {
+    const { task, editTask } = this.props;
+    editTask({
+      ...task,
+      date: task.date.slice(0, 10),
+      status
+    }, true)
+  }
+
+
   render() {
     const { onTaskEditMode, onConfirmDeleteMode } = this.state;
     const { task } = this.props;
@@ -46,6 +56,16 @@ class SingleTask extends React.Component {
             </Card.Text>
             <Card.Text>Completion Date: {dateDispalyFormatter(task.date)}</Card.Text>
             <div>
+              {(task.status === "active") ?
+                <Button
+                  variant="success"
+                  onClick={() => this.updateStatus("done")}
+                ><FontAwesomeIcon icon={faCheck} /></Button> :
+                <Button
+                  variant="secondary"
+                  onClick={() => this.updateStatus("active")}
+                ><FontAwesomeIcon icon={faRedoAlt} /></Button>
+              }
               <Button
                 variant="warning"
                 onClick={this.toggleTaskEditMode}
@@ -81,7 +101,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getSingleTask,
-  deleteTask
+  deleteTask,
+  editTask
 }
 
 

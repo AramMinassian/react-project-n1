@@ -2,6 +2,7 @@ import styles from "../styles/Contact.module.css"
 import React from "react";
 import { Button, FormControl } from "react-bootstrap";
 import validator from "validator";
+import { request } from "../utilityFunctions";
 
 
 class Contact extends React.Component {
@@ -58,22 +59,8 @@ class Contact extends React.Component {
             if (formError[error]) return;
         }
 
-        fetch("http://localhost:3001/form", {
-            method: "POST",
-            body: JSON.stringify(formData),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then(async (response) => {
-                const result = await response.json();
-                if (response.status >= 400 && response.status < 600) {
-                    if (result.error) {
-                        throw result.error;
-                    } else {
-                        throw new Error("Something went wrong");
-                    }
-                }
+        request("http://localhost:3001/form", "POST", formData)
+            .then(() => {
                 this.setState({
                     formData: {
                         name: "",
@@ -82,7 +69,6 @@ class Contact extends React.Component {
                     }
                 })
             })
-
             .catch(error => {
                 console.log(error);
             })

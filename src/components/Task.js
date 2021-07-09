@@ -4,16 +4,27 @@ import PropTypes from "prop-types";
 import { Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faCalendarAlt, faCheck, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { dateDispalyFormatter, truncText } from "../utilityFunctions";
+import { connect } from "react-redux";
+import { editTask } from "../reduxStore/actions";
 
 class Task extends React.PureComponent {
 
 
   handleSelect = () => {
     const { task, onSelectMode, selectTask } = this.props;
-    if(!onSelectMode) return;
+    if (!onSelectMode) return;
     selectTask(task._id)
+  }
+
+  updateStatus = (status) => {
+    const { task, editTask } = this.props;
+    editTask({
+      ...task,
+      date: task.date.slice(0, 10),
+      status
+    }, true)
   }
 
   render() {
@@ -43,8 +54,21 @@ class Task extends React.PureComponent {
                 <FontAwesomeIcon icon={faCalendarAlt} />
                 <span>{dateDispalyFormatter(task.date)}</span>
               </span>
+              {task.status}
             </Card.Text>
             <div className={styles.taskButtons}>
+              {(task.status === "active") ?
+                <Button
+                  variant="success"
+                  disabled={onSelectMode}
+                  onClick={() => this.updateStatus("done")}
+                ><FontAwesomeIcon icon={faCheck} /></Button> : 
+                <Button
+                  variant="secondary"
+                  disabled={onSelectMode}
+                  onClick={() => this.updateStatus("active")}
+                ><FontAwesomeIcon icon={faRedoAlt} /></Button> 
+              }
               <Button
                 variant="warning"
                 disabled={onSelectMode}
@@ -73,6 +97,10 @@ Task.propTypes = {
   selectedTaskIds: PropTypes.object.isRequired
 }
 
-export default Task
+const mapDispatchToProps = {
+  editTask
+}
+
+export default connect(null, mapDispatchToProps)(Task)
 
 
