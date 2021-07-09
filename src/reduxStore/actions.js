@@ -14,7 +14,7 @@ export function getAllTasks(queryParams = {}) {
         dispatch({ type: "GET_ALL_TASKS", tasks });
       })
       .catch(error => {
-        dispatch({type: "ERROR", errorMessage: error.message})
+        dispatch({ type: "ERROR", errorMessage: error.message })
       });
   }
 }
@@ -27,7 +27,7 @@ export function getSingleTask(taskId) {
         dispatch({ type: "GET_SINGLE_TASK", task });
       })
       .catch(error => {
-        dispatch({type: "ERROR", errorMessage: error.message})
+        dispatch({ type: "ERROR", errorMessage: error.message })
       });
   }
 }
@@ -40,7 +40,7 @@ export function addTask(newTask) {
         dispatch({ type: "ADD_TASK", task });
       })
       .catch(error => {
-        dispatch({type: "ERROR", errorMessage: error.message})
+        dispatch({ type: "ERROR", errorMessage: error.message })
       });
   }
 }
@@ -54,7 +54,7 @@ export function deleteTask(taskId, fromSingleTask) {
         if (fromSingleTask) history.push("/");
       })
       .catch(error => {
-        dispatch({type: "ERROR", errorMessage: error.message})
+        dispatch({ type: "ERROR", errorMessage: error.message })
       });
   }
 }
@@ -68,21 +68,22 @@ export function deleteSelectedTasks(selectedTaskIds) {
         dispatch({ type: "DELETE_SELECTED_TASKS", selectedTaskIds });
       })
       .catch(error => {
-        dispatch({type: "ERROR", errorMessage: error.message})
+        dispatch({ type: "ERROR", errorMessage: error.message })
       });
   }
 }
 
-export function editTask(editedTask, fromSingleTask) {
+export function editTask(task, fromSingleTask) {
   return dispatch => {
     dispatch({ type: "PROCESS" });
-    request(`${apiHost}/task/${editedTask._id}`, "PUT", editedTask)
-      .then(() => {
-        dispatch({ type: "EDIT_TASK", editedTask, fromSingleTask });
-      })
+    request(`${apiHost}/task/${task._id}`, "PUT", task)
+      .then((editedTask) => {
+        dispatch({ type: "EDIT_TASK", editedTask, fromSingleTask, status: task.status });
+      }) 
       .catch(error => {
-        dispatch({type: "ERROR", errorMessage: error.message})
+        dispatch({ type: "ERROR", errorMessage: error.message })
       });
   }
 }
+
 

@@ -85,13 +85,20 @@ function reducer(state = defaultState, action) {
       const tasks = state.tasks.map(task => {
         return (task._id === action.editedTask._id) ? action.editedTask : task;
       })
+
+      let successMessage = "Task edited successfully";
+      //if task status is being updated
+      if(action.status){
+        successMessage = (action.status === "done") ? "Task fulfilled successfully" : "Task reactivated successfully"
+      }
+      
       const task = (action.fromSingleTask) ? action.editedTask : null;
       return {
         ...state,
         tasks,
         task,
         inProcess: false,
-        successMessage: "Task edited successfully"
+        successMessage
       }
     }
     /*--------------------------------------------------------------------*/
