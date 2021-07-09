@@ -1,54 +1,9 @@
-
-
-.Task{
-  margin: 10px 0;
+/* in App.css only global styles are defined */
+.App{
+  overflow: hidden;
 }
-
-.Task input[type="checkbox"]{
-  display: block;
-  margin-left: auto;
-}
-
-.Task input[type="checkbox"]:disabled{
-  visibility: hidden;
-}
-
-.Task .tsk-date {
-  opacity: 0.7;
-  margin-bottom: 30px;
-}
-
-.Task .tsk-date span{
-  display: inline-block;
-  margin-left: 10px;
-}
-
-.Task.onSelectMode{
-  cursor: pointer;
-  border-width: 2px;
-  opacity: 0.6;
-}
-
-.Task.Selected{
-  border: 2px solid rgb(117, 4, 4);
-  opacity: 1;
-}
-
-.tsk-btns{
-  display: flex;
-  justify-content: flex-start;
-}
-.tsk-btns button{
-  margin-right: 10px;
-}
-
-.ControlButtons{
-  display: flex;
-}
-
-.ControlButtons button{
-  flex: 1;
-  margin: 0 4px
+a{
+  text-decoration: none;
 }
 
 .empty-message{

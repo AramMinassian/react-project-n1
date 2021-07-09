@@ -1,4 +1,4 @@
-import "./Modals.css";
+import styles from "../styles/Modals.module.css";
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, FormControl } from "react-bootstrap";
@@ -96,15 +96,15 @@ class TaskInputOrEditModal extends React.Component {
         const { title, description, date, warning } = this.state;
         const cardTitle = (taskToEdit) ? "Edit task" : "Add new task"
         return (
-            <div className="mdl-back">
-                <div className="mdl-wrapper">
-                    <div className="mdl-header">
-                        <span className="mdl-info">{cardTitle}</span>
+            <div className={styles.modalBg}>
+                <div className={`${styles.modalWrapper} ${styles.taskInputOrEditModal}`}>
+                    <div className={styles.modalHeader}>
+                        <span className={styles.modalInfo}>{cardTitle}</span>
                     </div>
-                    <div className="mdl-body tsk-input">
+                    <div className={styles.modalBody}>
                         {warning && <small>task must have a title</small>}
                         <FormControl
-                            className="tsk-input-field"
+                            type="text"
                             placeholder="Title"
                             name="title"
                             value={title}
@@ -112,7 +112,6 @@ class TaskInputOrEditModal extends React.Component {
                             ref={this.inputRef}
                         />
                         <FormControl
-                            className="tsk-textarea-field"
                             as="textarea"
                             placeholder="Description"
                             name="description"
@@ -127,21 +126,18 @@ class TaskInputOrEditModal extends React.Component {
                             onChange={this.handleChange}
                         />
                     </div>
-                    <div className="mdl-footer">
+                    <div className={styles.modalFooter}>
                         {taskToEdit ?
                             <Button
-                                className="mdl-action-btn"
                                 variant="warning"
                                 onClick={this.handleEdit}
                             >Edit</Button> :
                             <Button
-                                className="mdl-action-btn"
                                 variant="primary"
                                 onClick={this.handleAdd}
                             >Add</Button>
                         }
                         <Button
-                            className="mdl-action-btn"
                             variant="danger"
                             onClick={() => toggleTaskInputOrEditMode()}
                         >Cancel</Button>

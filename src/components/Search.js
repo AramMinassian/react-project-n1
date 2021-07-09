@@ -1,4 +1,4 @@
-import "./SearchAndFilter.css";
+import styles from "../styles/Search.module.css"
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +6,7 @@ import { faSearch, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { getAllTasks } from "../reduxStore/actions";
 
-class SearchAndFilter extends React.Component {
+class Search extends React.Component {
 
   state = {
     search: ""
@@ -36,22 +36,19 @@ class SearchAndFilter extends React.Component {
   render() {
     const { onSelectMode, toggleFilterMode } = this.props;
     return (
-      <div className="SearchAndFilter">
+      <div className={styles.search}>
         <input
           type="text"
-          className="search-field"
           placeholder="Search for a task"
           disabled={onSelectMode}
           onChange={this.handleChange}
         />
         <button
-          className="search-btn"
           title="search"
           disabled={onSelectMode}
           onClick={this.handleSearch}
         ><FontAwesomeIcon icon={faSearch} /></button>
         <button
-          className="filter-btn"
           title="apply filters"
           disabled={onSelectMode}
           onClick={toggleFilterMode}
@@ -62,7 +59,7 @@ class SearchAndFilter extends React.Component {
   }
 }
 
-SearchAndFilter.propTypes = {
+Search.propTypes = {
   onSelectMode: PropTypes.bool.isRequired,
   toggleFilterMode: PropTypes.func.isRequired,
   setSearchParams: PropTypes.func.isRequired,
@@ -75,4 +72,4 @@ const mapDispatchToProps = {
   getAllTasks
 }
 
-export default connect(null, mapDispatchToProps)(SearchAndFilter);
+export default connect(null, mapDispatchToProps)(Search);

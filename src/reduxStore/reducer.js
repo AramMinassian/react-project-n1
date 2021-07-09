@@ -2,7 +2,9 @@
 const defaultState = {
   tasks: [],
   task: null,
-  inProcess: false
+  inProcess: false,
+  successMessage: null,
+  errorMessage: null,
 }
 
 
@@ -13,7 +15,18 @@ function reducer(state = defaultState, action) {
     case "PROCESS": {
       return {
         ...state,
-        inProcess: true
+        inProcess: true,
+        successMessage: null,
+        errorMessage: null,
+      }
+    }
+    /*--------------------------------------------------------------------*/
+    case "ERROR": {
+      const { errorMessage } = action.error;
+      return {
+        ...state,
+        inProcess: false,
+        errorMessage
       }
     }
     /*--------------------------------------------------------------------*/
@@ -41,7 +54,8 @@ function reducer(state = defaultState, action) {
       return {
         ...state,
         tasks,
-        inProcess: false
+        inProcess: false,
+        successMessage: "Task added successfully" 
       }
     }
     /*--------------------------------------------------------------------*/
@@ -50,7 +64,8 @@ function reducer(state = defaultState, action) {
       return {
         ...state,
         tasks,
-        inProcess: false
+        inProcess: false,
+        successMessage: "Task deleted successfully" 
       }
     }
     /*--------------------------------------------------------------------*/
@@ -61,7 +76,8 @@ function reducer(state = defaultState, action) {
       return {
         ...state,
         tasks,
-        inProcess: false
+        inProcess: false,
+        successMessage: `Selected task${action.selectedTaskIds.size > 1 ? "s" : ""} deleted successfully` 
       }
     }
     /*--------------------------------------------------------------------*/
@@ -74,7 +90,8 @@ function reducer(state = defaultState, action) {
         ...state,
         tasks,
         task,
-        inProcess: false
+        inProcess: false,
+        successMessage: "Task edited successfully"
       }
     }
     /*--------------------------------------------------------------------*/

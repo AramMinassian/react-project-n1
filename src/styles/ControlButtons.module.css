@@ -1,0 +1,14 @@
+.controlButtons{
+  display: flex;
+}
+
+.controlButtons button{
+  flex: 1;
+  margin: 0 4px
+}
+
+@media only screen and (max-width : 450px) {
+  .controlButtons button{
+    font-size: 0.9rem;
+  }
+}

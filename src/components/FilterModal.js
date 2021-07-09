@@ -1,4 +1,4 @@
-import "./Modals.css";
+import styles from "../styles/Modals.module.css";
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, FormControl } from "react-bootstrap";
@@ -110,19 +110,19 @@ class FilterModal extends React.Component {
     const { status, sort, create_lte, create_gte, complete_lte, complete_gte } = this.state;
 
     return (
-      <div className="filter-mdl mdl-back">
-        <div className="mdl-wrapper">
-          <div className="mdl-header">
+      <div className={styles.modalBg}>
+        <div className={`${styles.modalWrapper} ${styles.filterModal}`}>
+          <div className={styles.modalHeader}>
             <span
-              className="mdl-info"
+              className={styles.modalInfo}
             > Filter options</span>
             <span
-              className="mdl-close-btn"
+              className={styles.modalCloseButton}
               onClick={toggleFilterMode}
             ><FontAwesomeIcon icon={faTimes} /></span>
           </div>
-          <div className="mdl-body">
-            <div className="select">
+          <div className={styles.modalBody}>
+            <div className={styles.select}>
               <label htmlFor="sort">Sort by</label>
               <select
                 name="sort"
@@ -136,7 +136,7 @@ class FilterModal extends React.Component {
                 ))}
               </select>
             </div>
-            <div className="select">
+            <div className={styles.select}>
               <label htmlFor="status">Status</label>
               <select
                 name="status"
@@ -150,7 +150,7 @@ class FilterModal extends React.Component {
                 ))}
               </select>
             </div>
-            <div className="date-options">
+            <div>
               <label htmlFor="create_lte">Created before</label>
               <FormControl
                 type="date"
@@ -181,19 +181,16 @@ class FilterModal extends React.Component {
               />
             </div>
           </div>
-          <div className="mdl-footer">
+          <div className={styles.modalFooter}>
             <Button
-              className="mdl-action-btn"
               variant="primary"
               onClick={this.handleApply}
             >Apply</Button>
             <Button
-              className="mdl-action-btn"
               variant="success"
               onClick={this.handleReset}
             >Reset</Button>
             <Button
-              className="mdl-action-btn"
               variant="warning"
               onClick={toggleFilterMode}
             >Cancel</Button>
