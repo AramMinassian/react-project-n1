@@ -9,19 +9,20 @@
 }
 
 .navMenu .navMenuLogo{
-  padding: 0 60px 0 20px;
+  padding: 0 5% 0 1%;
   margin-right: 20px;
   border-right: 2px solid white;
   font-size: 1.4rem;
 }
 
-.navToggle{
-  display: none;
+.navMenu .userLink,
+.navMenu .signInLink
+{
+  margin-left: auto;
 }
 
-
-.navMenu .navMenuLink{
-  padding: 0 20px;
+.navMenuLink{
+  padding-right: 15px;
   font-size: 1.2rem;
   transition: color 0.2s ease;
 }
@@ -40,47 +41,32 @@
 }
 
 
-@media only screen and (max-width : 500px) {
-
-  .navMenu{
-    display: flex;
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    background: #3c8aff;
-    padding: 10px 30px;
-    margin: 0;
-    transition: left 0.25s ease-in-out;
-  }
-
-  .navMenu.opened{
-    left: 0;
-  }
-
-  .navMenu.closed{
-    left: -100vw
-  }
+@media only screen and (max-width : 550px) {
   .navMenu .navMenuLogo{
     display: none;
   }
+  .navMenuLink{
+    padding-right: 3%;
+  }
+}
 
-  .navToggle{
-    display: block;
-    position: relative;
-    top: 0;
-    left: 0;
-    padding: 10px;
-    color: white;
-    z-index: 1001;
-    font-size: 1.5rem;
-    background: #3c8aff;
-    margin-bottom: 10px;
+@media only screen and (max-width : 400px) {
+  .navMenu{
+    padding: 10px
   }
 
+  .navMenuLink{
+    font-size: 1.1rem;
+  }
+
+  .navMenu button{
+    padding: 5px;
+  }
+}
+
+@media only screen and (max-width : 320px) {
+
+  .navMenuLink{
+    font-size: 1rem;
+  }
 }

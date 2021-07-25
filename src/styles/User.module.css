@@ -1,0 +1,22 @@
+.user{
+  display: flex;
+  margin: 20px 30px;
+}
+
+.user img{
+  width: 25%;
+  margin-right: 30px;
+}
+
+@media only screen and (max-width : 500px) {
+  .user{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .user img{
+    width: 50%;
+    margin: 30px 0 20px;
+  }
+
+}

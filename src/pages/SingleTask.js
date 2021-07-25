@@ -5,7 +5,7 @@ import TaskInputOrEditModal from "../components/TaskInputOrEditModal";
 import { Card, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faRedoAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { dateDispalyFormatter } from "../utilityFunctions";
+import { dateDispalyFormatter } from "../utility/utilityFunctions";
 import { connect } from "react-redux";
 import { getSingleTask, deleteTask, editTask } from "../reduxStore/actions";
 

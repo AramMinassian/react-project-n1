@@ -1,8 +1,11 @@
-import styles from "../styles/Contact.module.css"
+import styles from "../styles/Forms.module.css"
 import React from "react";
 import { Button, FormControl } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import validator from "validator";
-import { request } from "../utilityFunctions";
+import { connect } from "react-redux";
+import { contact } from "../reduxStore/actions";
 
 
 class Contact extends React.Component {
@@ -49,6 +52,7 @@ class Contact extends React.Component {
     handleSend = () => {
 
         const { formData } = this.state;
+        const { contact } = this.props;
         const formError = {
             name: !formData.name,
             email: !validator.isEmail(formData.email),
@@ -59,28 +63,25 @@ class Contact extends React.Component {
             if (formError[error]) return;
         }
 
-        request("http://localhost:3001/form", "POST", formData)
-            .then(() => {
-                this.setState({
-                    formData: {
-                        name: "",
-                        email: "",
-                        message: ""
-                    }
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        contact(formData);
+        this.setState({
+            formData: {
+                name: "",
+                email: "",
+                message: ""
+            }
+        })
     }
 
     render() {
         const { formError, formData } = this.state;
         return (
-            <div className={styles.contact}>
-                <h1>Contact us</h1>
+            <div className={styles.todoForm}>
+                <header>
+                    <h1>Contact us</h1>
+                </header>
                 <div className={styles.contactForm}>
-                    <div>
+                    <div className={styles.field}>
                         <FormControl
                             placeholder="Name"
                             name="name"
@@ -88,11 +89,11 @@ class Contact extends React.Component {
                             onChange={this.handleChange}
                             autoComplete="off"
                         />
-                        {formError.name && <small
-                            className={styles.error}
-                        >Please provide a name</small>}
+                        {formError.name && <small className={styles.error}>
+                            <FontAwesomeIcon icon={faExclamationCircle} /> Please provide a name
+                        </small>}
                     </div>
-                    <div>
+                    <div className={styles.field}>
                         <FormControl
                             type="email"
                             placeholder="Email"
@@ -101,11 +102,11 @@ class Contact extends React.Component {
                             onChange={this.handleChange}
                             autoComplete="off"
                         />
-                        {formError.email && <small
-                            className={styles.error}
-                        >Please provide a formerly formatted email address</small>}
+                        {formError.email && <small className={styles.error}>
+                            <FontAwesomeIcon icon={faExclamationCircle} /> Please provide a formerly formatted email address
+                        </small>}
                     </div>
-                    <div>
+                    <div className={styles.field}>
                         <FormControl
                             as="textarea"
                             rows={7}
@@ -115,9 +116,9 @@ class Contact extends React.Component {
                             onChange={this.handleChange}
                             autoComplete="off"
                         />
-                        {formError.message && <small
-                            className={styles.error}
-                        >Please provide a message</small>}
+                        {formError.message && <small className={styles.error}>
+                            <FontAwesomeIcon icon={faExclamationCircle} /> Please provide a message
+                        </small>}
                     </div>
                     <Button
                         variant="primary"
@@ -129,4 +130,8 @@ class Contact extends React.Component {
     }
 }
 
-export default Contact;
+const mapDispatchToProps = {
+    contact
+}
+
+export default connect(null, mapDispatchToProps)(Contact);

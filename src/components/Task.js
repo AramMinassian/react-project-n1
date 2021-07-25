@@ -5,7 +5,7 @@ import { Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faCalendarAlt, faCheck, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
-import { dateDispalyFormatter, truncText } from "../utilityFunctions";
+import { dateDispalyFormatter, truncText } from "../utility/utilityFunctions";
 import { connect } from "react-redux";
 import { editTask } from "../reduxStore/actions";
 
@@ -54,7 +54,6 @@ class Task extends React.PureComponent {
                 <FontAwesomeIcon icon={faCalendarAlt} />
                 <span>{dateDispalyFormatter(task.date)}</span>
               </span>
-              {task.status}
             </Card.Text>
             <div className={styles.taskButtons}>
               {(task.status === "active") ?

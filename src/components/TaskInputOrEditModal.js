@@ -2,7 +2,9 @@ import styles from "../styles/Modals.module.css";
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, FormControl } from "react-bootstrap";
-import { dateFormatter } from "../utilityFunctions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { dateFormatter } from "../utility/utilityFunctions";
 import { connect } from "react-redux";
 import { addTask, editTask } from "../reduxStore/actions";
 
@@ -14,10 +16,11 @@ class TaskInputOrEditModal extends React.Component {
         warning: false,
     }
 
-    inputRef = React.createRef();
+    titleRef = React.createRef();
+    descriptionRef = React.createRef();
 
     componentDidMount() {
-        this.inputRef.current.focus();
+        this.titleRef.current.focus();
         const { taskToEdit } = this.props;
         if (taskToEdit) {
             this.setState({
@@ -49,6 +52,7 @@ class TaskInputOrEditModal extends React.Component {
         const { addTask, toggleTaskInputOrEditMode } = this.props
         if (!title.trim()) {
             this.setState({ warning: true });
+            this.titleRef.current.focus();
             return
         };
 
@@ -75,6 +79,7 @@ class TaskInputOrEditModal extends React.Component {
         const { editTask, toggleTaskInputOrEditMode, taskToEdit, isFromSingleTask } = this.props
         if (!title.trim()) {
             this.setState({ warning: true });
+            this.titleRef.current.focus();
             return;
         };
         if (new Date(date) < new Date()) {
@@ -91,6 +96,16 @@ class TaskInputOrEditModal extends React.Component {
         toggleTaskInputOrEditMode();
     }
 
+    handleEnter = (e) => {
+        if (e.key !== "Enter") return;
+        const { taskToEdit } = this.props;
+        if (taskToEdit) {
+            this.handleEdit();
+        } else {
+            this.handleAdd();
+        }
+    }
+
     render() {
         const { toggleTaskInputOrEditMode, taskToEdit } = this.props;
         const { title, description, date, warning } = this.state;
@@ -102,14 +117,16 @@ class TaskInputOrEditModal extends React.Component {
                         <span className={styles.modalInfo}>{cardTitle}</span>
                     </div>
                     <div className={styles.modalBody}>
-                        {warning && <small>task must have a title</small>}
+                        {warning && <small><FontAwesomeIcon icon={faExclamationCircle} /> task must have a title</small>}
                         <FormControl
                             type="text"
                             placeholder="Title"
                             name="title"
                             value={title}
                             onChange={this.handleChange}
-                            ref={this.inputRef}
+                            onKeyDown={this.handleEnter}
+                            ref={this.titleRef}
+                            autoComplete="off"
                         />
                         <FormControl
                             as="textarea"
@@ -117,6 +134,9 @@ class TaskInputOrEditModal extends React.Component {
                             name="description"
                             value={description}
                             onChange={this.handleChange}
+                            onKeyDown={this.handleEnter}
+                            ref={this.descriptionRef}
+                            autoComplete="off"
                         />
                         <FormControl
                             type="date"

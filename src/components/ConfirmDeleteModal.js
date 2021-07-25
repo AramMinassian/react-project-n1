@@ -14,6 +14,7 @@ class ConfirmDeleteModal extends React.Component {
   // the component works for both single and selected tasks deletion
   // single task deletion is indicated by taskToDelete state variable
 
+
   handleSideClick = (e) => {
     if (e.target.className !== "mdl-back") return;
     const { toggleConfirmDeleteMode } = this.props;

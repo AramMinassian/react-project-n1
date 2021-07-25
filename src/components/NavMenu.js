@@ -2,62 +2,80 @@ import styles from "../styles/NavMenu.module.css";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { signOut } from "../reduxStore/actions";
 
 
 class NavMenu extends React.Component {
 
-  state = {
-    isOpened: false
-  }
-
-  toggleMenu = () => {
-    this.setState({
-      isOpened: !this.state.isOpened
-    })
-  }
 
   render() {
 
-    const { isOpened } = this.state;
+    const { loggedIn, signOut } = this.props;
+    const token = JSON.parse(localStorage.getItem("token"));
 
     return (
-      <>
-        <div className={styles.navToggle}>
-          {isOpened ? <FontAwesomeIcon onClick={this.toggleMenu} icon={faTimes} /> : <FontAwesomeIcon onClick={this.toggleMenu} icon={faBars} />}
+      <div className={styles.navMenu}>
+        <div className={styles.navMenuLogo}>
+          <NavLink
+            to={`${loggedIn ? "/" : "/signin"}`}
+            exact={true}
+          >To <FontAwesomeIcon icon={faCheckCircle} /> Do</NavLink>
         </div>
-        <div className={`${styles.navMenu} ${isOpened ? styles.opened : styles.closed}`}>
-          <div className={styles.navMenuLogo}>
+        <NavLink
+          className={styles.navMenuLink}
+          activeClassName={styles.navMenuLinkActive}
+          to={`${loggedIn ? "/" : "/signin"}`}
+          exact={true}
+        >Home</NavLink>
+        <NavLink
+          className={styles.navMenuLink}
+          activeClassName={styles.navMenuLinkActive}
+          to="/about"
+          exact={true}
+        >About</NavLink>
+        <NavLink
+          className={styles.navMenuLink}
+          activeClassName={styles.navMenuLinkActive}
+          to="/contact"
+          exact={true}
+        >Contact</NavLink>
+        {loggedIn ?
+          <>
             <NavLink
-              to="/"
+              className={`${styles.navMenuLink} ${styles.userLink}`}
+              activeClassName={styles.navMenuLinkActive}
+              activeStyle={{ "color": "#ffc107" }}
+              to="/user"
               exact={true}
-            >To-Do</NavLink>
-          </div>
+            ><FontAwesomeIcon icon={faUser} /></NavLink>
+            <Button
+              variant="light"
+              onClick={() => signOut(token.jwt)}
+            >Logout</Button>
+          </>
+          :
           <NavLink
-            className={styles.navMenuLink}
+            className={`${styles.navMenuLink} ${styles.signInLink}`}
             activeClassName={styles.navMenuLinkActive}
-            to="/"
+            to="/signin"
             exact={true}
-            onClick={this.toggleMenu}
-          >Home</NavLink>
-          <NavLink
-            className={styles.navMenuLink}
-            activeClassName={styles.navMenuLinkActive}
-            to="/about"
-            exact={true}
-            onClick={this.toggleMenu}
-          >About</NavLink>
-          <NavLink
-            className={styles.navMenuLink}
-            activeClassName={styles.navMenuLinkActive}
-            to="/contact"
-            exact={true}
-            onClick={this.toggleMenu}
-          >Contact</NavLink>
-        </div>
-      </>
+          >Sign In</NavLink>}
+      </div>
     )
   }
 }
 
-export default NavMenu;
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.loggedIn
+  }
+}
+
+const mapDispatchToProps = {
+  signOut
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);
