@@ -1,0 +1,45 @@
+.todoForm{
+  margin: 30px;
+  margin-top: 60px;
+}
+
+.todoForm header{
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.todoForm header p{
+  opacity: 0.7;
+}
+
+.contactForm{
+  max-width: 700px;
+  margin: auto;
+}
+
+.signUpForm,
+.signInForm{
+  max-width: 400px;
+  margin: auto;
+}
+
+.todoForm .field{
+  margin-bottom: 15px;
+}
+
+.todoForm .error{
+  color: red;
+}
+
+.todoForm button{
+  display: block;
+  padding: 8px 30px;
+  margin-left: auto;
+}
+
+@media only screen and (max-width : 448px) {
+  .todoForm .error{
+    font-size: 0.8rem;
+    line-height: 0;
+  }
+}

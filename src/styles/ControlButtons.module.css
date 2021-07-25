@@ -3,12 +3,17 @@
 }
 
 .controlButtons button{
-  flex: 1;
+  flex: 1 0;
   margin: 0 4px
 }
 
-@media only screen and (max-width : 450px) {
+@media only screen and (max-width : 431px) {
+  .controlButtons{
+    flex-wrap: wrap;
+  }
+
   .controlButtons button{
-    font-size: 0.9rem;
+    margin: 2px;
+    white-space: nowrap;
   }
 }

@@ -46,6 +46,10 @@
   padding: 20px 20px;
 }
 
+.filterModal{
+  max-height: 80vh;
+}
+
 .filterModal .modalBody{
   display: flex;
   flex-flow: nowrap column
@@ -98,8 +102,15 @@
     min-width: auto;
   }
 
+  .taskInputOrEditModal{
+    width: 100%;
+  }
+
   .filterModal select{
     width:  100%;
     min-width: auto;
   }
 }
+
+
+

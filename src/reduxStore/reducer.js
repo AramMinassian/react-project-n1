@@ -5,6 +5,8 @@ const defaultState = {
   inProcess: false,
   successMessage: null,
   errorMessage: null,
+  loggedIn: !!localStorage.getItem("token"),
+  userInfo: JSON.parse(localStorage.getItem("user"))
 }
 
 
@@ -22,7 +24,7 @@ function reducer(state = defaultState, action) {
     }
     /*--------------------------------------------------------------------*/
     case "ERROR": {
-      const { errorMessage } = action.error;
+      const { errorMessage } = action;
       return {
         ...state,
         inProcess: false,
@@ -55,7 +57,7 @@ function reducer(state = defaultState, action) {
         ...state,
         tasks,
         inProcess: false,
-        successMessage: "Task added successfully" 
+        successMessage: "Task added successfully"
       }
     }
     /*--------------------------------------------------------------------*/
@@ -65,7 +67,7 @@ function reducer(state = defaultState, action) {
         ...state,
         tasks,
         inProcess: false,
-        successMessage: "Task deleted successfully" 
+        successMessage: "Task deleted successfully"
       }
     }
     /*--------------------------------------------------------------------*/
@@ -77,7 +79,7 @@ function reducer(state = defaultState, action) {
         ...state,
         tasks,
         inProcess: false,
-        successMessage: `Selected task${action.selectedTaskIds.size > 1 ? "s" : ""} deleted successfully` 
+        successMessage: `Selected task${action.selectedTaskIds.size > 1 ? "s" : ""} deleted successfully`
       }
     }
     /*--------------------------------------------------------------------*/
@@ -88,10 +90,10 @@ function reducer(state = defaultState, action) {
 
       let successMessage = "Task edited successfully";
       //if task status is being updated
-      if(action.status){
+      if (action.status) {
         successMessage = (action.status === "done") ? "Task fulfilled successfully" : "Task reactivated successfully"
       }
-      
+
       const task = (action.fromSingleTask) ? action.editedTask : null;
       return {
         ...state,
@@ -99,6 +101,48 @@ function reducer(state = defaultState, action) {
         task,
         inProcess: false,
         successMessage
+      }
+    }
+    /*--------------------------------------------------------------------*/
+    case "SIGNUP": {
+      return {
+        ...state,
+        inProcess: false,
+        successMessage: "Successfully signed up"
+      }
+    }
+    /*--------------------------------------------------------------------*/
+    case "SIGNIN": {
+      return {
+        ...state,
+      }
+    }
+    /*--------------------------------------------------------------------*/
+    case "SIGNOUT": {
+      return {
+        ...state,
+        inProcess: false,
+        loggedIn: false,
+        userInfo: null,
+      }
+    }
+    /*--------------------------------------------------------------------*/
+    case "GET_USER_INFO": {
+      const { userInfo } = action;
+      return {
+        ...state,
+        inProcess: false,
+        loggedIn: true,
+        userInfo,
+        successMessage: `Welcome ${userInfo.name} ${userInfo.surname}`
+      }
+    }
+    /*--------------------------------------------------------------------*/
+    case "CONTACT": {
+      return {
+        ...state,
+        inProcess: false,
+        successMessage: "Message sent successfully"
       }
     }
     /*--------------------------------------------------------------------*/

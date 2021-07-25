@@ -52,7 +52,7 @@ class Search extends React.Component {
           title="apply filters"
           disabled={onSelectMode}
           onClick={toggleFilterMode}
-        ><FontAwesomeIcon icon={faFilter} /> Filters</button>
+        ><FontAwesomeIcon icon={faFilter} /> <span>Filters</span></button>
       </div>
 
     )
